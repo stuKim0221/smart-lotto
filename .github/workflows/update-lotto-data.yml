@@ -2,7 +2,7 @@ name: Update Lotto Data
 
 on:
   schedule:
-    - cron: '50 11 * * 6'   # 토요일 11:50 UTC = 토요일 20:50 KST
+    - cron: '50 11 * * 6'   # 매주 토요일 11:50 UTC = 토요일 20:50 KST
   workflow_dispatch:
 
 concurrency:
@@ -20,10 +20,10 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: main
-        fetch-depth: 0              # 리베이스/리셋 위해 전체 히스토리 필요
-        persist-credentials: true   # GITHUB_TOKEN으로 push 허용
+        fetch-depth: 0
+        persist-credentials: true
 
-    # ✅ 시작 즉시 원격과 동일하게 맞춤(“fetch first”의 근본 원인 제거)
+    # 🔹 실행 시작 시 로컬을 원격 main과 완전히 동일하게 맞춤
     - name: Sync to origin/main (pre)
       shell: bash
       run: |
@@ -45,6 +45,7 @@ jobs:
     - name: Run data update script
       run: python scripts/update_lotto_data.py
 
+    # 🔹 커밋 후 rebase → push, 실패 시 재시도(+최후 1회 lease 강제)
     - name: Commit and push if changed
       shell: bash
       run: |
@@ -60,7 +61,7 @@ jobs:
 
         git commit -m "Auto-update lotto data - $(date -u)"
 
-        # 최신 반영 후 푸시 (레이스 대비 재시도 3회)
+        # 최대 3회 재시도: 원격 최신을 얹고 push
         for i in 1 2 3; do
           git fetch origin main
           git pull --rebase origin main || true
@@ -68,11 +69,11 @@ jobs:
             echo "Pushed successfully"
             exit 0
           fi
-          echo "Push rejected, retry #$i after short backoff..."
+          echo "Push rejected, retry #$i..."
           sleep 3
         done
 
-        # 마지막 안전 강제 푸시: --force-with-lease (원격이 우리가 본 상태에서 바뀌었으면 거부)
+        # 최후: --force-with-lease (남의 최신 커밋을 덮지 않도록 보호)
         echo "Final attempt with --force-with-lease"
         git fetch origin main
         git pull --rebase origin main || true
