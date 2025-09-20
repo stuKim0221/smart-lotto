@@ -2,7 +2,7 @@ name: Update Lotto Data
 
 on:
   schedule:
-    - cron: '30 12 * * 6'
+    - cron: '50 11 * * 6'   # 토요일 11:50 UTC = 토요일 20:50 KST
   workflow_dispatch:
 
 jobs:
@@ -28,12 +28,13 @@ jobs:
       run: python scripts/update_lotto_data.py
       
     - name: Commit and push if changed
+      if: github.event_name == 'schedule'   # 스케줄 트리거일 때만 커밋/푸시
       run: |
         git config --global user.name 'GitHub Actions Bot'
         git config --global user.email 'actions@github.com'
         git add draw_kor.csv
         if ! git diff --staged --quiet; then
-          git commit -m "Auto-update lotto data - $(date)"
+          git commit -m "Auto-update lotto data - $(date -u)"
           git push
         else
           echo "No changes to commit"
