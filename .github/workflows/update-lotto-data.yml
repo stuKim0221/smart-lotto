@@ -45,7 +45,7 @@ jobs:
     - name: Run data update script
       run: python scripts/update_lotto_data.py
 
-    # 🔹 커밋 후 rebase → push, 실패 시 재시도(+최후 1회 lease 강제)
+    # 🔹 커밋 후 rebase → push
     - name: Commit and push if changed
       shell: bash
       run: |
@@ -61,20 +61,7 @@ jobs:
 
         git commit -m "Auto-update lotto data - $(date -u)"
 
-        # 최대 3회 재시도: 원격 최신을 얹고 push
-        for i in 1 2 3; do
-          git fetch origin main
-          git pull --rebase origin main || true
-          if git push origin HEAD:main; then
-            echo "Pushed successfully"
-            exit 0
-          fi
-          echo "Push rejected, retry #$i..."
-          sleep 3
-        done
-
-        # 최후: --force-with-lease (남의 최신 커밋을 덮지 않도록 보호)
-        echo "Final attempt with --force-with-lease"
+        # 원격 최신을 가져와 리베이스 후 푸시
         git fetch origin main
-        git pull --rebase origin main || true
-        git push --force-with-lease origin HEAD:main
+        git rebase origin/main
+        git push origin HEAD:main
