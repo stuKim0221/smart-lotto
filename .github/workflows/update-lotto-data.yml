@@ -2,8 +2,8 @@ name: Update Lotto Data
 
 on:
   schedule:
-    - cron: '50 11 * * 6'   # 매주 토 11:50 UTC = 토 20:50 KST
-  workflow_dispatch:         # 수동 실행도 허용
+    - cron: '50 11 * * 6'   # 토요일 11:50 UTC = 토요일 20:50 KST
+  workflow_dispatch:
 
 concurrency:
   group: update-lotto-data
@@ -13,15 +13,25 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     permissions:
-      contents: write         # 브랜치 푸시
-      pull-requests: write    # PR 생성/업데이트
+      contents: write
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0
         ref: main
+        fetch-depth: 0              # 리베이스/리셋 위해 전체 히스토리 필요
+        persist-credentials: true   # GITHUB_TOKEN으로 push 허용
+
+    # ✅ 시작 즉시 원격과 동일하게 맞춤(“fetch first”의 근본 원인 제거)
+    - name: Sync to origin/main (pre)
+      shell: bash
+      run: |
+        set -e
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
+        git fetch origin main
+        git checkout main
+        git reset --hard origin/main
 
     - name: Setup Python
       uses: actions/setup-python@v4
@@ -35,40 +45,35 @@ jobs:
     - name: Run data update script
       run: python scripts/update_lotto_data.py
 
-    - name: Commit changes to bot branch
+    - name: Commit and push if changed
+      shell: bash
       run: |
         set -e
-        git config user.name "GitHub Actions Bot"
-        git config user.email "actions@github.com"
-        # 전용 브랜치(있으면 체크아웃, 없으면 생성)
-        git checkout -B bot/lotto-data
+        git config user.name 'GitHub Actions Bot'
+        git config user.email 'actions@github.com'
+
         git add draw_kor.csv
         if git diff --staged --quiet; then
-          echo "NO_CHANGES=true" >> $GITHUB_ENV
           echo "No changes to commit"
-        else
-          git commit -m "Auto-update lotto data - $(date -u)"
+          exit 0
         fi
 
-    - name: Push bot branch
-      if: env.NO_CHANGES != 'true'
-      run: |
-        git fetch origin
-        # 원격 브랜치가 있으면 최신 반영 후 푸시
-        if git ls-remote --exit-code --heads origin bot/lotto-data; then
-          git pull --rebase origin bot/lotto-data || true
-        fi
-        git push origin HEAD:bot/lotto-data
+        git commit -m "Auto-update lotto data - $(date -u)"
 
-    - name: Create or update Pull Request
-      if: env.NO_CHANGES != 'true'
-      uses: peter-evans/create-pull-request@v6
-      with:
-        branch: bot/lotto-data
-        base: main
-        title: "Auto-update lotto data"
-        body: "자동 로또 데이터 업데이트 PR (bot/lotto-data → main)"
-        commit-message: "Auto-update lotto data - $(date -u)"
-        labels: "automation, data"
-        delete-branch: false
-        draft: false
+        # 최신 반영 후 푸시 (레이스 대비 재시도 3회)
+        for i in 1 2 3; do
+          git fetch origin main
+          git pull --rebase origin main || true
+          if git push origin HEAD:main; then
+            echo "Pushed successfully"
+            exit 0
+          fi
+          echo "Push rejected, retry #$i after short backoff..."
+          sleep 3
+        done
+
+        # 마지막 안전 강제 푸시: --force-with-lease (원격이 우리가 본 상태에서 바뀌었으면 거부)
+        echo "Final attempt with --force-with-lease"
+        git fetch origin main
+        git pull --rebase origin main || true
+        git push --force-with-lease origin HEAD:main
