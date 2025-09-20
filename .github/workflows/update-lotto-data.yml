@@ -42,26 +42,12 @@ jobs:
       run: |
         pip install requests pandas
 
+    # 🔹 데이터 업데이트 스크립트 실행
     - name: Run data update script
       run: python scripts/update_lotto_data.py
 
-    # 🔹 커밋 후 rebase → push
-    - name: Commit and push if changed
-      shell: bash
-      run: |
-        set -e
-        git config user.name 'GitHub Actions Bot'
-        git config user.email 'actions@github.com'
-
-        git add draw_kor.csv
-        if git diff --staged --quiet; then
-          echo "No changes to commit"
-          exit 0
-        fi
-
-        git commit -m "Auto-update lotto data - $(date -u)"
-
-        # 원격 최신을 가져와 리베이스 후 푸시
-        git fetch origin main
-        git rebase origin/main
-        git push origin HEAD:main
+    # 🔹 파일 변경사항을 자동으로 감지하고 커밋 및 푸시
+    - name: Commit files
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Auto-update lotto data - $(date -u)"
