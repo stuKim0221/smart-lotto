@@ -39,7 +39,7 @@
                 android:text="🤖 AI 번호 생성"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface"
+                android:textColor="#000000"
                 android:gravity="center" />
 
             <View
@@ -149,7 +149,7 @@
                         android:text="📊 조합 모드 (개별 전략 선택)"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurface"
+                        android:textColor="#000000"
                         android:padding="12dp"
                         android:background="?attr/selectableItemBackground" />
 
@@ -160,7 +160,7 @@
                         android:text="🎯 순수 통계 모드 (랜덤성 제거)"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurface"
+                        android:textColor="#000000"
                         android:padding="12dp"
                         android:background="?attr/selectableItemBackground" />
 
@@ -223,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:text="고빈도 번호 집중 (출현횟수 최우선)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:text="소외번호 회귀 이론 (장기 미출현 번호)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -241,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:text="최근 추세 반영 (최근 10회 가중치)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp"
                     android:layout_marginBottom="16dp" />
 
@@ -261,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:text="고가중치 모드 (극단적 통계 적용)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -270,7 +270,7 @@
                     android:layout_height="wrap_content"
                     android:text="균형 가중치 (모든 지표 동등 반영)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp"
                     android:layout_marginBottom="16dp" />
 
@@ -290,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:text="주기성 분석 (출현 패턴 주기 추적)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -299,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:text="상관관계 분석 (번호간 연관성 계산)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -308,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:text="회귀 분석 (미래 출현 예측 모델)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp"
                     android:layout_marginBottom="16dp" />
 
@@ -403,7 +403,7 @@
                     android:text="📈 통계 기반 전략"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:layout_marginBottom="8dp" />
 
                 <CheckBox
@@ -412,7 +412,7 @@
                     android:layout_height="wrap_content"
                     android:text="인기 번호 위주 (자주 나오는 번호)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -421,7 +421,7 @@
                     android:layout_height="wrap_content"
                     android:text="소외 번호 도전 (오래 안나온 번호)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -430,7 +430,7 @@
                     android:layout_height="wrap_content"
                     android:text="최근 트렌드 반영 (최근 패턴 활용)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -439,7 +439,7 @@
                     android:layout_height="wrap_content"
                     android:text="페어 분석 (함께 나오는 번호 쌍)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp"
                     android:layout_marginBottom="16dp" />
 
@@ -450,7 +450,7 @@
                     android:text="⚖️ 균형 및 패턴 전략"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:layout_marginBottom="8dp" />
 
                 <CheckBox
@@ -459,7 +459,7 @@
                     android:layout_height="wrap_content"
                     android:text="홀짝 균형 (홀수3 짝수3 권장)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -468,7 +468,7 @@
                     android:layout_height="wrap_content"
                     android:text="구간 분산 (1-45를 5구간으로 분산)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -477,7 +477,7 @@
                     android:layout_height="wrap_content"
                     android:text="연속번호 피하기 (1,2,3 같은 연속 방지)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -486,7 +486,7 @@
                     android:layout_height="wrap_content"
                     android:text="끝자리 다양성 (1,11,21,31,41 방지)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -495,7 +495,7 @@
                     android:layout_height="wrap_content"
                     android:text="시각적 패턴 피하기 (일직선/대각선 방지)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp"
                     android:layout_marginBottom="16dp" />
 
@@ -506,7 +506,7 @@
                     android:text="🎲 심리학 &amp; 재미 전략"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:layout_marginBottom="8dp" />
 
                 <CheckBox
@@ -515,7 +515,7 @@
                     android:layout_height="wrap_content"
                     android:text="대중 기피 번호 (상금 독식 노리기)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp" />
 
                 <CheckBox
@@ -524,7 +524,7 @@
                     android:layout_height="wrap_content"
                     android:text="오늘의 행운 (날짜 기반 특별 조합)"
                     android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="#000000"
                     android:padding="8dp"
                     android:layout_marginBottom="16dp" />
 
@@ -753,7 +753,7 @@
                             android:text="번호가 여기에 표시됩니다"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurface"
+                            android:textColor="#000000"
                             android:gravity="center"
                             android:minHeight="48dp" />
 
@@ -782,7 +782,7 @@
                             android:layout_height="wrap_content"
                             android:text="분석 정보가 여기에 표시됩니다"
                             android:textSize="14sp"
-                            android:textColor="?attr/colorOnSurface"
+                            android:textColor="#000000"
                             android:minHeight="32dp" />
 
                     </LinearLayout>

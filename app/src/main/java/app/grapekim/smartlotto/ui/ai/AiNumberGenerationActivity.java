@@ -97,6 +97,8 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
     private RewardedAd rewardedAd;
     private boolean isAdLoading = false;
     private boolean isGenerating = false;
+    private int adLoadRetryCount = 0;
+    private static final int MAX_AD_RETRY = 3; // 최대 3회 재시도
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,6 +281,7 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
                     public void onAdLoaded(@NonNull RewardedAd ad) {
                         rewardedAd = ad;
                         isAdLoading = false;
+                        adLoadRetryCount = 0; // 성공 시 재시도 카운트 초기화
                         Log.d(TAG, "리워드 광고 로드 성공");
                         setupRewardedAdCallbacks();
                         updateButtonState();
@@ -291,6 +294,7 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
                         Log.e(TAG, "에러 메시지: " + loadAdError.getMessage());
                         Log.e(TAG, "에러 도메인: " + loadAdError.getDomain());
                         Log.e(TAG, "에러 원인: " + loadAdError.getCause());
+                        Log.e(TAG, "재시도 횟수: " + adLoadRetryCount + "/" + MAX_AD_RETRY);
 
                         // 일반적인 에러 코드 해석
                         String errorExplanation = getAdErrorExplanation(loadAdError.getCode());
@@ -300,16 +304,19 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
                         isAdLoading = false;
                         updateButtonState();
 
-                        // 사용자에게 메시지 표시하지 않음 - 조용히 백그라운드에서 처리
-                        // showToast("광고 로드 실패: " + errorExplanation); // 제거됨
-
-                        // 광고 로드 실패 시 자동 재시도 (10초 후로 연장하여 사용자 방해 최소화)
-                        btnGenerate.postDelayed(() -> {
-                            if (rewardedAd == null && !isAdLoading) {
-                                Log.d(TAG, "자동 재시도: 광고 다시 로드 시도");
-                                loadRewardedAd();
-                            }
-                        }, 10000);
+                        // 최대 재시도 횟수 체크
+                        if (adLoadRetryCount < MAX_AD_RETRY) {
+                            adLoadRetryCount++;
+                            // 광고 로드 실패 시 자동 재시도 (10초 후)
+                            btnGenerate.postDelayed(() -> {
+                                if (rewardedAd == null && !isAdLoading) {
+                                    Log.d(TAG, "자동 재시도: 광고 다시 로드 시도 (" + adLoadRetryCount + "/" + MAX_AD_RETRY + ")");
+                                    loadRewardedAd();
+                                }
+                            }, 10000);
+                        } else {
+                            Log.w(TAG, "최대 재시도 횟수 도달 - 광고 없이 진행 가능");
+                        }
                     }
                 });
     }
@@ -371,11 +378,11 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
             } else if (rewardedAd != null && !isAdLoading) {
                 // 광고 로드 완료 상태
                 btnGenerate.setText("🎁 광고 보고 AI 번호 받기");
-            } else if (isAdLoading) {
-                // 광고 로딩 중 상태 - 부드러운 표현으로 변경
+            } else if (isAdLoading && adLoadRetryCount < MAX_AD_RETRY) {
+                // 광고 로딩 중 상태 (재시도 중)
                 btnGenerate.setText("📱 광고 준비중...");
             } else {
-                // 광고 로드 실패 상태 - 더 간단한 표현
+                // 광고 로드 실패 또는 최대 재시도 도달 - 광고 없이도 가능
                 btnGenerate.setText("🎁 AI 번호 생성하기");
             }
         }
@@ -404,36 +411,45 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
                     generateAiNumbers();
                 }
             });
-        } else if (isAdLoading) {
+        } else if (isAdLoading && adLoadRetryCount < MAX_AD_RETRY) {
             // 광고 로딩 중이면 사용자에게 알림
             Log.d(TAG, "광고 로딩 중 - 사용자에게 안내");
             showToast("📱 광고를 로딩 중입니다. 잠시만 기다려주세요...");
         } else {
-            // 광고가 없으면 즉시 재로드 시도
-            Log.d(TAG, "리워드 광고 없음 - 즉시 재로드 시도");
+            // 광고가 없거나 최대 재시도 도달 - 광고 없이 진행
+            if (adLoadRetryCount >= MAX_AD_RETRY) {
+                Log.w(TAG, "최대 재시도 도달 - 광고 없이 AI 번호 생성");
+                showToast("광고 로드 실패로 광고 없이 진행합니다");
+                generateAiNumbers();
+            } else {
+                // 광고가 없으면 즉시 재로드 시도
+                Log.d(TAG, "리워드 광고 없음 - 즉시 재로드 시도");
 
-            // 네트워크 상태 먼저 확인
-            if (!isNetworkAvailable()) {
-                showToast("📶 인터넷 연결을 확인하고 다시 시도해주세요");
-                return;
-            }
-
-            showToast("🔄 광고를 로드합니다. 잠시만 기다려주세요...");
-
-            if (!isAdLoading) {
-                loadRewardedAd(); // 광고 즉시 재로드 시도
-            }
-
-            // 3초 후 다시 확인하여 로드되면 자동 실행, 실패하면 에러 메시지
-            btnGenerate.postDelayed(() -> {
-                if (rewardedAd != null && !isAdLoading) {
-                    Log.d(TAG, "광고 로드 완료 - 자동 재시도");
-                    showToast("✅ 광고가 준비되었습니다! 다시 버튼을 눌러주세요.");
-                } else if (!isAdLoading) {
-                    // 버튼 클릭 시에만 구체적인 에러 메시지 표시
-                    showToast("⚠️ 광고 로드에 실패했습니다. 네트워크를 확인하고 다시 시도해주세요.");
+                // 네트워크 상태 먼저 확인
+                if (!isNetworkAvailable()) {
+                    showToast("📶 인터넷 연결 없음 - 광고 없이 진행합니다");
+                    generateAiNumbers();
+                    return;
                 }
-            }, 3000);
+
+                showToast("🔄 광고를 로드합니다. 잠시만 기다려주세요...");
+
+                if (!isAdLoading && adLoadRetryCount < MAX_AD_RETRY) {
+                    loadRewardedAd(); // 광고 즉시 재로드 시도
+                }
+
+                // 3초 후 다시 확인
+                btnGenerate.postDelayed(() -> {
+                    if (rewardedAd != null && !isAdLoading) {
+                        Log.d(TAG, "광고 로드 완료 - 자동 재시도");
+                        showToast("✅ 광고가 준비되었습니다! 다시 버튼을 눌러주세요.");
+                    } else if (!isAdLoading) {
+                        // 광고 로드 실패 - 광고 없이 진행
+                        showToast("광고 없이 AI 번호를 생성합니다");
+                        generateAiNumbers();
+                    }
+                }, 3000);
+            }
         }
     }
 

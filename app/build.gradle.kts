@@ -24,7 +24,7 @@ android {
         applicationId = "app.grapekim.smartlotto"
         minSdk = 26
         targetSdk = 35
-        versionCode = 21
+        versionCode = 22
         versionName = "1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
