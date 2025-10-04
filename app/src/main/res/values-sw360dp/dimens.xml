@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 작은 화면 (360dp 이상) - 일반 스마트폰 -->
+
+    <!-- 로또 구슬 크기 -->
+    <dimen name="lotto_ball_size">28dp</dimen>
+
+    <!-- 기타 공통 크기들 -->
+    <dimen name="card_corner_radius">10dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="standard_padding">12dp</dimen>
+    <dimen name="small_padding">6dp</dimen>
+    <dimen name="large_padding">18dp</dimen>
+
+    <!-- 버튼 관련 크기 -->
+    <dimen name="button_corner_radius">14dp</dimen>
+    <dimen name="button_stroke_width">2dp</dimen>
+
+    <!-- 홈 화면 버튼 이미지 크기 -->
+    <dimen name="home_button_image_size">120dp</dimen>
+    <dimen name="home_button_padding">10dp</dimen>
+    <dimen name="home_ai_button_image_size">60dp</dimen>
+    <dimen name="home_ai_button_padding">14dp</dimen>
+
+    <!-- 홈 화면 레이아웃 마진 -->
+    <dimen name="home_container_padding">16dp</dimen>
+    <dimen name="home_button_margin">6dp</dimen>
+    <dimen name="home_card_margin_bottom">12dp</dimen>
+    <dimen name="home_ai_button_margin">24dp</dimen>
+
+    <!-- 텍스트 크기 -->
+    <dimen name="home_button_text_size">16sp</dimen>
+    <dimen name="home_ai_button_title_size">18sp</dimen>
+    <dimen name="home_ai_button_subtitle_size">16sp</dimen>
+</resources>

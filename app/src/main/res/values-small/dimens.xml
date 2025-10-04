@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 홈 화면 버튼 이미지 크기 (소형 화면) -->
+    <dimen name="home_button_image_size">100dp</dimen>
+    <dimen name="home_button_padding">8dp</dimen>
+    <dimen name="home_ai_button_image_size">50dp</dimen>
+    <dimen name="home_ai_button_padding">12dp</dimen>
+
+    <!-- 홈 화면 레이아웃 마진 (소형 화면) -->
+    <dimen name="home_container_padding">16dp</dimen>
+    <dimen name="home_button_margin">4dp</dimen>
+    <dimen name="home_card_margin_bottom">12dp</dimen>
+    <dimen name="home_ai_button_margin">16dp</dimen>
+
+    <!-- 텍스트 크기 조정 -->
+    <dimen name="home_button_text_size">16sp</dimen>
+    <dimen name="home_ai_button_title_size">18sp</dimen>
+    <dimen name="home_ai_button_subtitle_size">16sp</dimen>
+</resources>

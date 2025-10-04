@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="48dp">
+
+        <!-- 상단 바 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_arrow_back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="뒤로가기" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🤖 AI 번호 생성"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:gravity="center" />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+        </LinearLayout>
+
+        <!-- AI 분석 안내 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FEE2E2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="💡 AI 분석 안내"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#B91C1C"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="과거 당첨번호 데이터를 기반으로\n통계적 패턴을 분석하여 번호를 추천합니다."
+                    android:textSize="14sp"
+                    android:textColor="#DC2626"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="아래 전략을 선택하여 맞춤형 번호를 생성하세요."
+                    android:textSize="13sp"
+                    android:textColor="#B91C1C"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 100% 통계 기반 옵션 (최상단) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FEF3C7">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🔬 분석 모드 선택"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#92400E"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- 현재 모드 표시 -->
+                <TextView
+                    android:id="@+id/tvCurrentMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📋 분석 모드를 선택해주세요"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#D97706"
+                    android:gravity="center"
+                    android:background="#FEF3C7"
+                    android:padding="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- 라디오 버튼 그룹 -->
+                <RadioGroup
+                    android:id="@+id/rgAnalysisMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rbCombinationMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📊 조합 모드 (개별 전략 선택)"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnSurface"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackground" />
+
+                    <RadioButton
+                        android:id="@+id/rbPureStatistics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🎯 순수 통계 모드 (랜덤성 제거)"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnSurface"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackground" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="※ 순수 통계 모드 선택 시 완전히 결정론적인\n통계 기반 번호가 생성됩니다."
+                    android:textSize="12sp"
+                    android:textColor="#A16207"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 100% 통계 모드 상세 설정 카드 (동적 표시) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPureStatisticsSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#F0F9FF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🎯 순수 통계 모드 설정"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#0369A1"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- 통계 전략 선택 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📈 주요 통계 전략"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0369A1"
+                    android:layout_marginBottom="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPurePopular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="고빈도 번호 집중 (출현횟수 최우선)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPureNeglected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="소외번호 회귀 이론 (장기 미출현 번호)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPureRecent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="최근 추세 반영 (최근 10회 가중치)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 통계 가중치 설정 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="⚖️ 가중치 조정"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0369A1"
+                    android:layout_marginBottom="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPureHighWeight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="고가중치 모드 (극단적 통계 적용)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPureBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="균형 가중치 (모든 지표 동등 반영)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 특수 통계 기법 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🎯 특수 통계 기법"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0369A1"
+                    android:layout_marginBottom="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPureCyclic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="주기성 분석 (출현 패턴 주기 추적)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPureCorrelation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="상관관계 분석 (번호간 연관성 계산)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPureRegression"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="회귀 분석 (미래 출현 예측 모델)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 통계 기준 설명 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#E0F2FE"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📊 선택된 전략별 가중치 적용"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#0C4A6E"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="선택하신 전략에 따라 각 번호의 통계적 점수가\n자동으로 계산되어 상위 6개 번호가 선택됩니다."
+                        android:textSize="13sp"
+                        android:textColor="#075985"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+                <!-- 결정론적 생성 안내 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FEF7CD"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="⚙️ 결정론적 생성 방식"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#92400E"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• 랜덤 요소 완전 제거\n• 동일 전략시 동일한 결과\n• 수학적 계산 기반 선택\n• 전략 변경시 결과 변경"
+                        android:textSize="13sp"
+                        android:textColor="#A16207"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 전략 선택 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardCombinationMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📊 개별 전략 선택 (조합 모드)"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 통계 기반 전략 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📈 통계 기반 전략"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPopular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="인기 번호 위주 (자주 나오는 번호)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbNeglected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="소외 번호 도전 (오래 안나온 번호)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbTrend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="최근 트렌드 반영 (최근 패턴 활용)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbPair"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="페어 분석 (함께 나오는 번호 쌍)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 균형 및 패턴 전략 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="⚖️ 균형 및 패턴 전략"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbOddEven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="홀짝 균형 (홀수3 짝수3 권장)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbZone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="구간 분산 (1-45를 5구간으로 분산)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbConsecutive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="연속번호 피하기 (1,2,3 같은 연속 방지)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbLastDigit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="끝자리 다양성 (1,11,21,31,41 방지)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbVisualPattern"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="시각적 패턴 피하기 (일직선/대각선 방지)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 심리학 & 재미 전략 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🎲 심리학 &amp; 재미 전략"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginBottom="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbAvoidance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="대중 기피 번호 (상금 독식 노리기)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp" />
+
+                <CheckBox
+                    android:id="@+id/cbLucky"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 행운 (날짜 기반 특별 조합)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorOnSurface"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- 조합 모드 랜덤성 안내 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#E8F5E9"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🎲 조합 모드 특징"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#1B5E20"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• 선택된 전략들을 조합하여 생성\n• 적절한 랜덤성(±5%) 적용\n• 같은 전략이어도 매번 다른 결과\n• 통계 분석 + 랜덤성의 균형"
+                        android:textSize="13sp"
+                        android:textColor="#2E7D32"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 품질점수 안내 카드 (새로 추가) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FEF2F2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🎯 품질점수 안내"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#991B1B"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="선택하신 전략을 바탕으로 생성된 번호 조합의\n통계적 우수성을 100점 만점으로 평가합니다."
+                    android:textSize="14sp"
+                    android:textColor="#B91C1C"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="높은 점수일수록 과거 당첨 패턴과 유사한\n균형잡힌 번호 조합임을 의미합니다."
+                    android:textSize="14sp"
+                    android:textColor="#B91C1C"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFECB3"
+                    android:padding="12dp"
+                    app:cardCornerRadius="8dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="⚠️ 품질점수는 통계적 분석 결과일 뿐,\n실제 당첨 확률과는 직접적인 연관이 없습니다."
+                        android:textSize="13sp"
+                        android:textColor="#E65100"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 100% 통계 기반 주의사항 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPureStatisticsWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFF3E0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="⚠️ 100% 통계 기반 주의사항"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#E65100"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="100% 순수 통계 기반 옵션을 선택하면 모든 랜덤성이 제거되어 완전히 동일한 조건에서는 같은 번호가 반복 생성될 수 있습니다."
+                    android:textSize="13sp"
+                    android:textColor="#F57C00"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="통계적 정확성을 원하는 고급 사용자에게만 권장됩니다."
+                    android:textSize="13sp"
+                    android:textColor="#FF8F00"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- AI 생성 버튼 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGenerate"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="🤖 AI 번호 생성하기"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 로딩 프로그레스바 -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 생성 결과 표시 -->
+        <LinearLayout
+            android:id="@+id/layoutResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✨ AI 생성 결과"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary"
+                        android:gravity="center"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- 생성된 번호들 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@android:drawable/dialog_holo_light_frame"
+                        android:padding="16dp"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="🎲 생성된 번호 조합"
+                            android:textSize="14sp"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvGenerationResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="번호가 여기에 표시됩니다"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface"
+                            android:gravity="center"
+                            android:minHeight="48dp" />
+
+                    </LinearLayout>
+
+                    <!-- 분석 정보 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@android:drawable/dialog_holo_light_frame"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="📊 생성 분석 정보"
+                            android:textSize="14sp"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:gravity="center"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvResultAnalysis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="분석 정보가 여기에 표시됩니다"
+                            android:textSize="14sp"
+                            android:textColor="?attr/colorOnSurface"
+                            android:minHeight="32dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 저장 버튼 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="💾 저장하기"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:enabled="false" />
+
+        </LinearLayout>
+
+        <!-- 하단 여백 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 기본 보안 설정: HTTPS만 허용, HTTP 완전 차단 -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <!-- 시스템 인증서만 신뢰 -->
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+
+    <!-- 도메인별 보안 설정 -->
+    <domain-config cleartextTrafficPermitted="false">
+        <!-- 동행복권 API -->
+        <domain includeSubdomains="true">www.dhlottery.co.kr</domain>
+        <domain includeSubdomains="true">dhlottery.co.kr</domain>
+
+        <!-- AdMob 및 Google Ads 도메인들 -->
+        <domain includeSubdomains="true">googleads.g.doubleclick.net</domain>
+        <domain includeSubdomains="true">pagead2.googlesyndication.com</domain>
+        <domain includeSubdomains="true">tpc.googlesyndication.com</domain>
+        <domain includeSubdomains="true">www.googletagservices.com</domain>
+        <domain includeSubdomains="true">www.google.com</domain>
+        <domain includeSubdomains="true">admob.com</domain>
+        <domain includeSubdomains="true">firebase.googleapis.com</domain>
+        <domain includeSubdomains="true">firebaseremoteconfig.googleapis.com</domain>
+
+        <!-- Google Play Services -->
+        <domain includeSubdomains="true">play.googleapis.com</domain>
+        <domain includeSubdomains="true">android.googleapis.com</domain>
+        <domain includeSubdomains="true">googleapis.com</domain>
+        <domain includeSubdomains="true">gstatic.com</domain>
+
+        <!-- GitHub CSV 데이터 소스 -->
+        <domain includeSubdomains="true">raw.githubusercontent.com</domain>
+        <domain includeSubdomains="true">github.com</domain>
+    </domain-config>
+</network-security-config>

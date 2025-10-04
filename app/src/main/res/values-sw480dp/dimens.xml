@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Medium screen (480dp and up) - Large smartphones -->
+
+    <!-- Lotto ball size -->
+    <dimen name="lotto_ball_size">32dp</dimen>
+
+    <!-- Common sizes -->
+    <dimen name="card_corner_radius">14dp</dimen>
+    <dimen name="card_elevation">5dp</dimen>
+    <dimen name="standard_padding">18dp</dimen>
+    <dimen name="small_padding">10dp</dimen>
+    <dimen name="large_padding">28dp</dimen>
+
+    <!-- Button related sizes -->
+    <dimen name="button_corner_radius">18dp</dimen>
+    <dimen name="button_stroke_width">3dp</dimen>
+
+    <!-- Home screen button image sizes -->
+    <dimen name="home_button_image_size">160dp</dimen>
+    <dimen name="home_button_padding">16dp</dimen>
+    <dimen name="home_ai_button_image_size">80dp</dimen>
+    <dimen name="home_ai_button_padding">20dp</dimen>
+
+    <!-- Home screen layout margins -->
+    <dimen name="home_container_padding">24dp</dimen>
+    <dimen name="home_button_margin">10dp</dimen>
+    <dimen name="home_card_margin_bottom">20dp</dimen>
+    <dimen name="home_ai_button_margin">40dp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="home_button_text_size">20sp</dimen>
+    <dimen name="home_ai_button_title_size">22sp</dimen>
+    <dimen name="home_ai_button_subtitle_size">20sp</dimen>
+</resources>

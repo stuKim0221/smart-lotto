@@ -1,0 +1,56 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?attr/colorOnSurface">
+  <!-- QR Code base -->
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M2,2h6v6H2V2zM3,3v4h4V3H3z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M16,2h6v6h-6V2zM17,3v4h4V3H17z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M2,16h6v6H2V16zM3,17v4h4v-4H3z"/>
+
+  <!-- QR patterns -->
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M4,4h2v2H4V4z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M18,4h2v2h-2V4z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M4,18h2v2H4V18z"/>
+
+  <!-- Scanner lines -->
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M10,2h1v6h-1V2z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M12,2h1v6h-1V2z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M9,10h6v1H9V10z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M9,12h6v1H9V12z"/>
+
+  <!-- Camera viewfinder corners -->
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M21,9V7l-2,0v2H21z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M21,17v-2l-2,0v2H21z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M15,21h2v-2h-2V21z"/>
+  <path
+      android:fillColor="@android:color/white"
+      android:pathData="M17,9h2v6h-2V9z"/>
+</vector>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <!-- 홈 -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="app.grapekim.smartlotto.ui.home.HomeFragment"
+        android:label="홈"
+        tools:layout="@layout/fragment_home">
+
+        <!-- 다른 Fragment로의 액션 추가 (프로그래밍 방식 네비게이션용) -->
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_home_to_favorites"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+
+    <!-- 이력 -->
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="app.grapekim.smartlotto.ui.history.HistoryFragment"
+        android:label="이력"
+        tools:layout="@layout/fragment_history">
+
+        <action
+            android:id="@+id/action_history_to_home"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_history_to_favorites"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+    <!-- 즐겨찾기 -->
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="app.grapekim.smartlotto.ui.favorites.FavoritesFragment"
+        android:label="즐겨찾기"
+        tools:layout="@layout/fragment_favorites">
+
+        <action
+            android:id="@+id/action_favorites_to_home"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_favorites_to_history"
+            app:destination="@id/historyFragment" />
+    </fragment>
+
+    <!-- 설정 -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="app.grapekim.smartlotto.ui.settings.SettingsFragment"
+        android:label="설정"
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_settings_to_home"
+            app:destination="@id/homeFragment" />
+
+        <!-- 개인정보 처리방침으로의 네비게이션 -->
+        <action
+            android:id="@+id/action_settings_to_privacy"
+            app:destination="@id/privacyPolicyActivity" />
+    </fragment>
+
+    <!-- 개인정보 처리방침 (Activity) -->
+    <activity
+        android:id="@+id/privacyPolicyActivity"
+        android:name="app.grapekim.smartlotto.ui.settings.PrivacyPolicyActivity"
+        android:label="@string/privacy_policy_title"
+        tools:layout="@layout/activity_privacy_policy" />
+
+</navigation>

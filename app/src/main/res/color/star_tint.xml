@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 즐겨찾기 ON -->
+    <item android:state_selected="true" android:color="#FBC02D"/> <!-- 머터리얼 노랑 -->
+    <!-- 기본 -->
+    <item android:color="?attr/colorOnSurfaceVariant"/>
+</selector>

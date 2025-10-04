@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- colors.xml에 추가할 기본 색상들 -->
+    <color name="win_color">#4CAF50</color>          <!-- 당첨 - 녹색 -->
+    <color name="no_win_color">#FF5722</color>       <!-- 낙첨 - 빨간색 -->
+
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_400">#9CA3AF</color>
+    <color name="blue_500">#3B82F6</color>
+    <color name="red_500">#EF4444</color>
+    <color name="orange_500">#F97316</color>
+
+    <!-- 블루 계열 -->
+    <color name="blue_50">#EFF6FF</color>
+    <color name="blue_600">#2563EB</color>
+    <color name="blue_800">#1E40AF</color>
+    <color name="blue_900">#1E3A8A</color>
+
+    <!-- 그린 계열 -->
+    <color name="green_50">#F0FDF4</color>
+    <color name="green_600">#16A34A</color>
+    <color name="green_800">#166534</color>
+    <color name="green_900">#14532D</color>
+
+    <!-- 퍼플 계열 -->
+    <color name="purple_50">#FAF5FF</color>
+    <color name="purple_600">#9333EA</color>
+    <color name="purple_800">#6B21A8</color>
+    <color name="purple_900">#581C87</color>
+
+    <!-- 옐로우 계열 -->
+    <color name="yellow_600">#CA8A04</color>
+
+    <!-- 레드 계열 -->
+    <color name="red_600">#DC2626</color>
+
+    <!-- 그레이 계열 -->
+    <color name="gray_50">#F9FAFB</color>
+    <color name="gray_600">#4B5563</color>
+    <color name="gray_700">#374151</color>
+    <color name="gray_800">#1F2937</color>
+
+    <!-- 버튼 경계선 색상 (라이트모드) -->
+    <color name="button_stroke_color">#E0E0E0</color>
+    <color name="button_stroke_focused">#DC2626</color>
+
+    <!-- QR 게임 배경 관련 색상 (신규 추가) -->
+    <color name="game_background_color">#F8FAFC</color>    <!-- 매우 밝은 회색 (슬레이트 50) -->
+    <color name="game_border_color">#E2E8F0</color>        <!-- 밝은 회색 (슬레이트 200) -->
+
+    <!-- QR 관련 추가 색상들 -->
+    <color name="colorOnSurface">#1F2937</color>            <!-- 주요 텍스트 색상 -->
+    <color name="colorOnSurfaceVariant">#6B7280</color>     <!-- 보조 텍스트용 -->
+    <color name="colorSurfaceVariant">#F1F5F9</color>      <!-- 보조 배경용 -->
+
+    <!-- Material 3 Light Theme Colors -->
+    <color name="md_theme_light_primary">#DC2626</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#FEE2E2</color>
+    <color name="md_theme_light_onPrimaryContainer">#7F1D1D</color>
+    <color name="md_theme_light_secondary">#DC2626</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#FEE2E2</color>
+    <color name="md_theme_light_onSecondaryContainer">#7F1D1D</color>
+    <color name="md_theme_light_tertiary">#9333EA</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">#F3E8FF</color>
+    <color name="md_theme_light_onTertiaryContainer">#581C87</color>
+    <color name="md_theme_light_surface">#FEFEFE</color>
+    <color name="md_theme_light_onSurface">#1F2937</color>
+    <color name="md_theme_light_surfaceVariant">#F1F5F9</color>
+    <color name="md_theme_light_onSurfaceVariant">#6B7280</color>
+    <color name="md_theme_light_background">#FEFEFE</color>
+    <color name="md_theme_light_onBackground">#1F2937</color>
+
+    <!-- Material 3 Dark Theme Colors -->
+    <color name="md_theme_dark_primary">#FCA5A5</color>
+    <color name="md_theme_dark_onPrimary">#7F1D1D</color>
+    <color name="md_theme_dark_primaryContainer">#991B1B</color>
+    <color name="md_theme_dark_onPrimaryContainer">#FEE2E2</color>
+    <color name="md_theme_dark_secondary">#FCA5A5</color>
+    <color name="md_theme_dark_onSecondary">#7F1D1D</color>
+    <color name="md_theme_dark_secondaryContainer">#991B1B</color>
+    <color name="md_theme_dark_onSecondaryContainer">#FEE2E2</color>
+    <color name="md_theme_dark_tertiary">#C4B5FD</color>
+    <color name="md_theme_dark_onTertiary">#581C87</color>
+    <color name="md_theme_dark_tertiaryContainer">#6B21A8</color>
+    <color name="md_theme_dark_onTertiaryContainer">#F3E8FF</color>
+    <color name="md_theme_dark_surface">#111827</color>
+    <color name="md_theme_dark_onSurface">#F9FAFB</color>
+    <color name="md_theme_dark_surfaceVariant">#374151</color>
+    <color name="md_theme_dark_onSurfaceVariant">#D1D5DB</color>
+    <color name="md_theme_dark_background">#0F172A</color>
+    <color name="md_theme_dark_onBackground">#F9FAFB</color>
+</resources>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="48dp">
+
+        <!-- 상단 바 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_arrow_back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="뒤로가기" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="수동 번호 입력"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:gravity="center" />
+
+            <View
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+        </LinearLayout>
+
+        <!-- 설명 텍스트 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📝 1~45 사이의 서로 다른 번호 6개를 입력해주세요"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- 번호 입력 카드 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- 번호 입력 영역 제목 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="로또 번호 입력"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp" />
+
+                <!-- 6개 번호 입력 필드 (가로 배치) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp">
+
+                    <EditText
+                        android:id="@+id/etNum1"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_edittext_manual"
+                        android:gravity="center"
+                        android:hint="1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColorHint="#C0C0C0"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:cursorVisible="false"
+                        android:textCursorDrawable="@null" />
+
+                    <EditText
+                        android:id="@+id/etNum2"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_edittext_manual"
+                        android:gravity="center"
+                        android:hint="2"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColorHint="#C0C0C0"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:cursorVisible="false"
+                        android:textCursorDrawable="@null" />
+
+                    <EditText
+                        android:id="@+id/etNum3"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_edittext_manual"
+                        android:gravity="center"
+                        android:hint="3"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColorHint="#C0C0C0"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:cursorVisible="false"
+                        android:textCursorDrawable="@null" />
+
+                    <EditText
+                        android:id="@+id/etNum4"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_edittext_manual"
+                        android:gravity="center"
+                        android:hint="4"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColorHint="#C0C0C0"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:cursorVisible="false"
+                        android:textCursorDrawable="@null" />
+
+                    <EditText
+                        android:id="@+id/etNum5"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_edittext_manual"
+                        android:gravity="center"
+                        android:hint="5"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColorHint="#C0C0C0"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:cursorVisible="false"
+                        android:textCursorDrawable="@null" />
+
+                    <EditText
+                        android:id="@+id/etNum6"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:background="@drawable/bg_edittext_manual"
+                        android:gravity="center"
+                        android:hint="6"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColorHint="#C0C0C0"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:cursorVisible="false"
+                        android:textCursorDrawable="@null" />
+
+                </LinearLayout>
+
+                <!-- 진행률 표시 -->
+                <TextView
+                    android:id="@+id/tvProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="6개 중 0개 입력됨"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorPrimary"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- 입력된 번호 표시 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_entered_numbers"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✅ 입력된 번호"
+                        android:textSize="14sp"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:gravity="center"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvEnteredNumbers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="아직 입력된 번호가 없습니다"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorOnSurface"
+                        android:gravity="center"
+                        android:minHeight="32dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- 저장 안내 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FEE2E2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="💾 저장 안내"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#991B1B"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="입력한 번호는 앱 내부에 안전하게 저장됩니다.\n좋아하는 번호를 저장하여 나중에 빠르게\n당첨 확인을 할 수 있습니다."
+                    android:textSize="14sp"
+                    android:textColor="#B91C1C"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 오류 알림 카드 (기본적으로 숨김) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:cardBackgroundColor="#FFEBEE">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+
+                <!-- 오류 아이콘 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚠️"
+                    android:textSize="20sp"
+                    android:layout_marginEnd="12dp" />
+
+                <!-- 오류 메시지 영역 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="입력 오류"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#C62828"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/tvErrorMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="문제가 발생했습니다"
+                        android:textSize="12sp"
+                        android:textColor="#D32F2F"
+                        android:lineSpacingExtra="2dp" />
+
+                </LinearLayout>
+
+                <!-- 닫기 버튼 -->
+                <ImageButton
+                    android:id="@+id/btnCloseError"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:scaleType="centerInside"
+                    android:contentDescription="오류 메시지 닫기"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 저장 버튼 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="조건을 모두 만족해주세요"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:enabled="false" />
+
+        <!-- 하단 여백 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+    </LinearLayout>
+
+</ScrollView>

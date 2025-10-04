@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 번호 및 품질점수 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvNumbers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🎲 2, 3, 13, 18, 28, 41 [자동]"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvQualityScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🟢 품질점수: 89/100점"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#2196F3"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- 조합 분석 섹션 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FAFAFA"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🎯 조합 분석"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvOddEvenRatio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="홀수 3개, 짝수 3개"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvRangeDistribution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="구간별: 1-9(2개), 10-18(1개), 19-27(1개), 28-36(1개), 37-45(1개)"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvConsecutiveNumbers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="연속번호 1쌍: 2-3"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvBalanceScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="균형점수: 85/100점"
+                android:textSize="13sp"
+                android:textColor="#666666" />
+
+        </LinearLayout>
+
+        <!-- 출현 빈도 섹션 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FAFAFA"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📈 출현 빈도"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvFrequencyAnalysis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="자주나오는번호 2개, 보통 3개, 드문번호 1개"
+                android:textSize="13sp"
+                android:textColor="#666666" />
+
+        </LinearLayout>
+
+        <!-- 면책 조항 -->
+        <TextView
+            android:id="@+id/tvDisclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚠️ 이 분석은 통계적 참고용이며 실제 당첨을 보장하지 않습니다."
+            android:textSize="11sp"
+            android:textColor="#FF9800"
+            android:background="#FFF3E0"
+            android:padding="8dp"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</ScrollView>

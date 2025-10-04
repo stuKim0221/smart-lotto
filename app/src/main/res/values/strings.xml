@@ -1,0 +1,332 @@
+<resources>
+    <!-- 앱 이름 -->
+    <string name="app_name">스마트 로또-똑똑한 로또 생활</string>
+
+    <!-- 탭/네비게이션 -->
+    <string name="tab_home">홈</string>
+    <string name="tab_history">이력</string>
+    <string name="tab_statistics">통계</string>
+    <string name="tab_settings">설정</string>
+
+    <!-- 공통/아이템 액션 -->
+    <string name="favorite">즐겨찾기</string>
+    <string name="delete">삭제</string>
+    <string name="analyze">분석</string>
+    <string name="save">저장하기</string>
+    <string name="close">닫기</string>
+    <string name="saved">저장되었습니다</string>
+
+    <!-- History 화면 -->
+    <string name="show_only_favorites">즐겨찾기만 보기</string>
+    <string name="history_empty">생성한 번호 이력이 없습니다.</string>
+    <string name="sort_newest">최신</string>
+    <string name="sort_oldest">과거</string>
+    <string name="favorites_empty">즐겨찾기 목록이 비어 있습니다.</string>
+
+    <!-- Home 화면 팝업/토스트 -->
+    <string name="auto_generated_title">자동 생성 번호</string>
+
+    <!-- 분석/기간 선택 -->
+    <string name="analysis_title">번호 분석</string>
+    <string name="period_title">기간 선택</string>
+    <string name="period_random">완전히 랜덤</string>
+    <string name="period_recent_3">최근 3개 회차</string>
+    <string name="period_recent_5">최근 5개 회차</string>
+    <string name="period_recent_10">최근 10개 회차</string>
+    <string name="period_recent_20">최근 20개 회차</string>
+    <string name="period_recent_30">최근 30개 회차</string>
+    <string name="period_recent_50">최근 50개 회차</string>
+
+    <!-- 번호 분석 다이얼로그 -->
+    <string name="number_analysis_title">📊 번호 분석</string>
+    <string name="quality_score_format">품질점수: %d/100점</string>
+    <string name="quality_score_excellent">🟢 품질점수: %d/100점</string>
+    <string name="quality_score_good">🟡 품질점수: %d/100점</string>
+    <string name="quality_score_poor">🔴 품질점수: %d/100점</string>
+
+    <!-- 분석 섹션 제목들 -->
+    <string name="section_combination_analysis">🎯 조합 분석</string>
+    <string name="section_frequency_analysis">📈 출현 빈도</string>
+    <string name="section_winning_prediction">💰 당첨 예상</string>
+
+    <!-- 번호 표시 -->
+    <string name="numbers_format_auto">🎲 %s [자동]</string>
+    <string name="numbers_format_manual">🎲 %s [수동]</string>
+
+    <!-- 홀짝 분석 -->
+    <string name="odd_even_format" formatted="false">홀수 %d개, 짝수 %d개</string>
+    <string name="odd_even_balanced">홀짝 균형 ✅</string>
+    <string name="odd_even_unbalanced">홀짝 불균형 ⚠️</string>
+
+    <!-- 구간 분포 -->
+    <string name="range_distribution_format">구간별: %s</string>
+    <string name="range_label_format" formatted="false">%s(%d개)</string>
+    <string name="range_1_9">1-9</string>
+    <string name="range_10_18">10-18</string>
+    <string name="range_19_27">19-27</string>
+    <string name="range_28_36">28-36</string>
+    <string name="range_37_45">37-45</string>
+
+    <!-- 연속번호 분석 -->
+    <string name="consecutive_none">연속번호 없음 ✅</string>
+    <string name="consecutive_found" formatted="false">연속번호 %d쌍: %s</string>
+    <string name="consecutive_warning">연속번호 많음 ⚠️</string>
+
+    <!-- 균형점수 -->
+    <string name="balance_score_format">균형점수: %d/100점</string>
+    <string name="balance_excellent">매우 균형잡힘 🎯</string>
+    <string name="balance_good">균형잡힘 👍</string>
+    <string name="balance_fair">보통 😐</string>
+    <string name="balance_poor">불균형 😰</string>
+
+    <!-- 출현 빈도 분석 -->
+    <string name="frequency_analysis_format" formatted="false">자주나오는번호 %d개, 보통 %d개, 드문번호 %d개</string>
+    <string name="hot_numbers">자주나오는번호</string>
+    <string name="normal_numbers">보통번호</string>
+    <string name="cold_numbers">드문번호</string>
+    <string name="frequency_hot_dominant">자주나오는번호 위주 🔥</string>
+    <string name="frequency_balanced">고른 분포 ⚖️</string>
+    <string name="frequency_cold_dominant">드문번호 위주 ❄️</string>
+
+    <!-- 당첨 확률 -->
+    <string name="probability_format" formatted="false">5등 %.2f%%, 4등 %.3f%%, 3등 %.4f%%</string>
+    <string name="probability_detailed_format" formatted="false">5등 %.2f%%, 4등 %.3f%%, 3등 %.4f%%, 2등 %.5f%%, 1등 %.6f%%</string>
+    <string name="probability_info">기본 확률 (모든 조합 동일)</string>
+
+    <!-- 면책 조항 -->
+    <string name="analysis_disclaimer">⚠️ 이 분석은 통계적 참고용이며 실제 당첨을 보장하지 않습니다.</string>
+    <string name="analysis_note">📝 로또는 완전한 확률 게임으로, 모든 번호 조합의 당첨 확률은 동일합니다.</string>
+
+    <!-- 분석 에러 메시지 -->
+    <string name="analysis_error">번호 분석 중 오류가 발생했습니다: %s</string>
+    <string name="analysis_invalid_numbers">올바르지 않은 번호 형식입니다.</string>
+    <string name="analysis_data_load_failed">분석 데이터를 불러올 수 없습니다.</string>
+    <string name="analysis_csv_error">역대 당첨번호 데이터를 읽을 수 없습니다.</string>
+
+    <!-- 결과 확인 -->
+    <string name="check_result">결과 확인</string>
+    <string name="checking">확인 중…</string>
+    <string name="result_title">당첨 결과</string>
+    <string name="result_round_date">%1$d회 (%2$s)</string>
+    <string name="result_rank">%1$d개 일치 → %2$s</string>
+    <string name="rank_1">1등</string>
+    <string name="rank_2">2등</string>
+    <string name="rank_3">3등</string>
+    <string name="rank_4">4등</string>
+    <string name="rank_5">5등</string>
+    <string name="rank_miss">꽝</string>
+    <string name="result_error">결과를 불러올 수 없습니다.</string>
+    <string name="regenerate">다시 뽑기</string>
+
+    <!-- 발표 전 처리 -->
+    <string name="not_announced">아직 발표 전입니다.</string>
+    <string name="not_announced_short">발표 전</string>
+
+    <!-- Settings -->
+    <string name="settings_draw_reminder">로또 추첨 알림</string>
+    <string name="settings_draw_reminder_desc">추첨 방송 N분 전에 알려드립니다.</string>
+    <string name="settings_version">버전 정보</string>
+    <string name="privacy_policy_title">개인정보 처리방침</string>
+    <string name="open_privacy_screen">자세히 보기</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel_draw_reminder_name">로또 추첨 알림</string>
+    <string name="notif_channel_draw_reminder_desc">로또 추첨 방송 N분 전에 알려드립니다.</string>
+    <string name="notif_draw_title">%1$d분 전 알림</string>
+    <string name="notif_draw_body">로또 추첨 방송이 곧 시작됩니다. (방송사 사정으로 실제 방송 시간이 달라질 수 있습니다.)</string>
+
+    <!-- Permission -->
+    <string name="notif_perm_denied">알림 권한이 거부되었습니다.</string>
+    <string name="camera_permission_denied">카메라 권한이 필요합니다.</string>
+
+    <!-- Reminder toasts -->
+    <string name="reminder_on">추첨 알림이 켜졌습니다.</string>
+    <string name="reminder_off">추첨 알림이 꺼졌습니다.</string>
+    <string name="reminder_rescheduled">알림 시간이 변경되어 재예약했습니다.</string>
+    <string name="next_alarm_at">다음 알림: %1$s</string>
+
+    <!-- Privacy placeholder -->
+    <string name="privacy_policy_placeholder">
+<![CDATA[
+<b>스마트 로또-똑똑한 로또 생활</b>(이하 "앱")은 「개인정보 보호법」 제30조에 따라 이용자의 개인정보를 보호하고 권익을 보장하기 위해 다음과 같이 개인정보 처리방침을 수립·공개합니다. 본 방침은 앱 이용자가 언제든 확인할 수 있도록 앱 내 설정 탭과 공개 웹페이지를 통해 제공됩니다.<br/><br/>
+
+<b>1. 개인정보의 처리 목적</b><br/><br/>
+
+앱은 다음의 목적을 위하여 개인정보를 처리하며, 이외의 용도로는 이용하지 않습니다.<br/><br/>
+
+- <b>로또 번호 생성 및 관리 서비스 제공:</b> 사용자가 생성한 로또 번호 조합의 기기 내 저장 및 관리<br/><br/>
+
+- <b>당첨 결과 확인 서비스:</b> 동행복권 공식 API를 통한 당첨번호 조회 및 결과 비교<br/><br/>
+
+- <b>광고 제공 및 맞춤형 광고 노출:</b> Google AdMob 광고 노출 및 광고 효율 측정<br/><br/>
+
+- <b>QR 코드 인식 기능 제공:</b> 카메라 권한을 사용하여 로또 QR 코드를 스캔 (촬영 이미지는 저장하지 않음)<br/><br/>
+
+- <b>알림 서비스 제공:</b> 이용자가 설정한 시간에 로또 추첨 관련 알림을 제공<br/>
+  * Android 12 이상: 정확한 시간 알림을 위한 특별 권한 사용<br/>
+  * 백그라운드 알림: 절전 모드에서도 알림 제공을 위한 Wake Lock 권한 사용<br/>
+  * 모든 알림 처리는 기기 내에서만 수행되며 서버로 데이터 전송 없음<br/><br/>
+
+<b>2. 처리하는 개인정보의 항목</b><br/><br/>
+
+앱은 회원가입이나 직접 입력을 요구하지 않습니다.<br/>
+다만, 서비스 제공을 위해 다음과 같은 정보가 처리될 수 있습니다.<br/><br/>
+
+<b>광고 서비스(Google AdMob)를 통해 자동 수집되는 정보:</b><br/>
+- 광고 ID (Google Advertising ID)<br/>
+- 기기 정보 (운영체제, 앱 버전, 단말기 모델명 등)<br/>
+- 광고 이용 관련 데이터 (광고 노출, 클릭 등)<br/><br/>
+
+<b>앱 사용 데이터 (기기 내에서만 저장):</b><br/>
+- 사용자가 생성한 로또 번호 조합<br/>
+- 번호 생성 일시 및 목표 회차 정보<br/>
+- 즐겨찾기 설정 및 결과 확인 기록<br/>
+- 번호 생성 방식 선택 기록 (자동/수동/AI/QR)<br/>
+- 앱 설정 정보 (알림 설정, 데이터 상태 등)<br/><br/>
+
+<i>※ 앱은 기능 개선을 위해 기기 내에서만 로그를 생성하며, 해당 로그는 서버로 전송하지 않고 앱 삭제 시 함께 삭제됩니다.</i><br/>
+<i>※ 카메라 권한 사용 시 QR 인식을 위해 실시간으로 촬영 데이터를 활용하지만, 해당 영상은 저장·전송하지 않습니다.</i><br/>
+<i>※ 알림 기능은 단말기의 로컬 알람 시스템만을 사용하며, 서버에 별도로 저장하지 않습니다.</i><br/><br/>
+
+<b>3. 개인정보의 처리 및 보유 기간</b><br/><br/>
+
+- 앱 사용 데이터: 사용자가 삭제하거나 앱 삭제 시까지 (기기 내에서만 저장)<br/>
+- 광고 서비스(Google AdMob)를 통해 수집된 데이터는 Google의 정책에 따릅니다.<br/>
+- 앱 삭제 시 기기 내 모든 데이터는 즉시 삭제됩니다.<br/><br/>
+
+<b>4. 개인정보의 제3자 제공</b><br/><br/>
+
+앱은 이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.<br/>
+다만, 서비스 운영을 위해 다음과 같은 제3자 서비스가 사용됩니다.<br/><br/>
+
+<b>제공받는 자:</b> Google AdMob<br/>
+<b>제공 목적:</b> 광고 제공 및 통계<br/>
+<b>제공 항목:</b> 광고 ID, 기기 정보, 광고 이용 데이터<br/>
+<b>보유 및 이용 기간:</b> Google 정책에 따름<br/><br/>
+
+<b>제공받는 자:</b> 동행복권(나눔로또)<br/>
+<b>제공 목적:</b> 당첨번호 조회 및 결과 확인<br/>
+<b>제공 항목:</b> 사용자 생성 번호 조합 (결과 비교용만 사용)<br/>
+<b>보유 및 이용 기간:</b> 즉시 처리 후 폐기 (저장하지 않음)<br/><br/>
+
+세부 내용은 각 서비스의 개인정보 처리방침을 따릅니다.<br/>
+<u>Google AdMob 개인정보처리방침</u><br/><br/>
+
+<b>5. 개인정보의 국외 이전</b><br/><br/>
+
+앱은 Google AdMob 서비스를 이용하고 있으며, 이 과정에서 이용자의 개인정보가 국외(미국 등 Google 서버)로 이전될 수 있습니다. 이 경우, 수집·이용·보관에 관한 사항은 Google의 정책을 따릅니다.<br/><br/>
+
+<b>6. 개인정보의 안전성 확보 조치</b><br/><br/>
+
+앱은 개인정보 보호를 위해 다음과 같은 조치를 취하고 있습니다.<br/><br/>
+
+- 통신 구간 암호화(HTTPS)<br/>
+- 접근 권한 최소화 및 권한 거부 기능 제공<br/>
+- 기기 내 로그만 생성하며 외부 전송 없음<br/>
+- 로또 당첨번호 데이터(CSV)는 공개된 정보만 사용하며 개인정보를 포함하지 않음<br/>
+- 모든 사용자 데이터는 기기 내부에만 저장되며 외부 서버로 전송하지 않음<br/><br/>
+
+<b>7. 이용자의 권리와 행사 방법</b><br/><br/>
+
+- 사용자는 기기 설정에서 광고 ID 초기화 또는 맞춤형 광고 제한을 할 수 있습니다.<br/>
+- 카메라/알림 권한은 언제든 기기 설정에서 변경·철회할 수 있습니다.<br/>
+- Android 12 이상에서 정확한 알림 권한도 기기 설정에서 관리할 수 있습니다.<br/>
+- 앱 내에서 생성한 로또 번호는 개별 삭제하거나 전체 삭제할 수 있습니다.<br/>
+- 앱 삭제 시 앱이 보유한 모든 데이터는 기기에서 즉시 삭제됩니다.<br/><br/>
+
+<b>8. 아동의 개인정보 처리</b><br/><br/>
+
+본 앱은 만 14세 미만 아동을 대상으로 하지 않으며, 아동의 개인정보를 수집하지 않습니다.<br/><br/>
+
+<b>9. 개인정보 보호책임자 및 연락처</b><br/><br/>
+
+<b>성명(또는 닉네임):</b> GrapeKim<br/>
+<b>이메일:</b> jsk000221@gmail.com<br/><br/>
+
+<b>10. 권익침해 구제방법</b><br/><br/>
+
+개인정보 침해로 인한 상담 및 피해 구제는 아래 기관에 문의할 수 있습니다.<br/><br/>
+
+- <b>개인정보분쟁조정위원회:</b> (국번없이) 1833-6972 / www.kopico.go.kr<br/>
+- <b>개인정보침해신고센터:</b> (국번없이) 118 / privacy.kisa.or.kr<br/>
+- <b>대검찰청 사이버범죄수사단:</b> (국번없이) 1301 / www.spo.go.kr<br/>
+- <b>경찰청 사이버수사국:</b> (국번없이) 182 / cyberbureau.police.go.kr<br/><br/>
+
+<b>11. 개인정보 처리방침 변경에 관한 사항</b><br/><br/>
+
+본 개인정보 처리방침은 시행일로부터 적용되며, 법령이나 서비스 내용 변경 시 개정될 수 있습니다. 변경사항이 있을 경우 앱 내 공지 또는 업데이트 시 안내합니다.<br/><br/>
+
+<b>시행일:</b> 2024년 9월 8일<br/><br/>
+]]>
+</string>
+
+    <!-- QR 스캔 관련 -->
+    <string name="scan_qr">QR 스캔</string>
+    <string name="qr_scanner_header">로또 영수증/QR을 화면 안에 맞춰 주세요</string>
+    <string name="qr_scanner_guide">자동 초점이 맞으면 QR을 자동 인식합니다</string>
+    <string name="qr_guide">구매 영수증/앱의 QR을 프레임 안에 맞춰 주세요</string>
+    <string name="qr_scanner_preparing">QR 스캐너 준비 중… (조만간 스캔 기능 연결)</string>
+    <string name="qr_scanner_coming_soon">스캔 모듈 연결 전입니다.</string>
+    <string name="qr_scanned">QR을 인식했습니다</string>
+    <string name="qr_scanner_error">카메라를 시작할 수 없습니다</string>
+    <string name="camera_init_failed">카메라 초기화에 실패했습니다</string>
+    <string name="torch">플래시</string>
+    <string name="toggle_flash">플래시 전환</string>
+
+    <!-- QR 결과 관련 -->
+    <string name="qr_scan_result">QR 스캔 결과</string>
+    <string name="scan_again">다시 스캔</string>
+    <string name="save_to_history">히스토리 저장</string>
+    <string name="parsing_failed">QR 데이터를 읽을 수 없습니다</string>
+    <string name="win_check_failed">당첨 확인에 실패했습니다</string>
+
+    <!-- 당첨 관련 -->
+    <string name="congratulations">🎉 축하합니다!</string>
+    <string name="no_win">아쉽게도 당첨되지 않았습니다</string>
+    <string name="first_prize">1등 당첨!</string>
+    <string name="second_prize">2등 당첨!</string>
+    <string name="third_prize">3등 당첨!</string>
+    <string name="fourth_prize">4등 당첨!</string>
+    <string name="fifth_prize">5등 당첨!</string>
+
+    <string name="cam_permission_denied">카메라 권한이 거부되었습니다</string>
+
+    <!-- 데이터 상태 관련 -->
+    <string name="data_range_format" formatted="false">%d회 ~ %d회 (총 %d개 회차)</string>
+    <string name="latest_round_format" formatted="false">제 %d회 (%s)</string>
+    <string name="next_update_format" formatted="false">D-%d (%s)</string>
+
+    <!-- QR 스캔 결과 화면 -->
+    <string name="qr_scan_result_title">QR 스캔 결과</string>
+    <string name="scanned_number_info">📱 스캔된 번호 정보</string>
+    <string name="round_label">회차</string>
+    <string name="no_round_info">정보 없음</string>
+    <string name="no_round_info_parsed">회차 정보 없음</string>
+    <string name="round_format">제%d회</string>
+
+    <!-- 게임 표시 -->
+    <string name="game_format" formatted="false">%c게임: %s</string>  <!-- A게임: 01, 15, 23, 28, 35, 42 -->
+    <string name="game_not_selected">%c게임: (선택 안함)</string>  <!-- A게임: (선택 안함) -->
+
+    <string name="go_to_history">히스토리 보기</string>
+
+    <!-- 메시지들 -->
+    <string name="no_qr_data">QR 데이터가 없습니다.</string>
+    <string name="no_data_to_save">저장할 데이터가 없습니다.</string>
+    <string name="saved_to_history">히스토리에 저장되었습니다.</string>
+    <string name="parsing_failed_title">QR 데이터 (파싱 실패)</string>
+    <string name="qr_content_prefix">QR 내용:\n\n</string>
+    <string name="qr_content_truncated">...\n(총 %d자)</string>
+    <string name="parsing_failed_round">파싱 실패</string>
+
+    <!-- 로그 메시지들 (선택사항) -->
+    <string name="log_qr_parsing_start">QR 데이터 파싱 시작</string>
+    <string name="log_parsing_success">파싱 성공 - %d게임 발견</string>
+    <string name="log_parsing_failed">파싱 실패 - 원시 데이터 표시</string>
+    <string name="log_games_saved">%d개 게임이 Repository에 저장됨</string>
+    <string name="log_no_valid_games">저장할 유효한 게임이 없음</string>
+    <string name="log_repository_save_failed">Repository 저장 실패</string>
+
+
+
+</resources>

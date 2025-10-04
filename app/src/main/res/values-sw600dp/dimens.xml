@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 태블릿용 로또 구슬 크기 (더 큰 크기) -->
+    <dimen name="lotto_ball_size">48dp</dimen>
+
+    <!-- 태블릿용 여백들도 크게 조정 -->
+    <dimen name="standard_padding">20dp</dimen>
+    <dimen name="small_padding">12dp</dimen>
+    <dimen name="large_padding">32dp</dimen>
+
+    <!-- 홈 화면 버튼 이미지 크기 (태블릿) -->
+    <dimen name="home_button_image_size">200dp</dimen>
+    <dimen name="home_button_padding">20dp</dimen>
+    <dimen name="home_ai_button_image_size">100dp</dimen>
+    <dimen name="home_ai_button_padding">24dp</dimen>
+
+    <!-- 홈 화면 레이아웃 마진 (태블릿) -->
+    <dimen name="home_container_padding">32dp</dimen>
+    <dimen name="home_button_margin">16dp</dimen>
+    <dimen name="home_card_margin_bottom">24dp</dimen>
+    <dimen name="home_ai_button_margin">48dp</dimen>
+
+    <!-- 텍스트 크기 조정 -->
+    <dimen name="home_button_text_size">20sp</dimen>
+    <dimen name="home_ai_button_title_size">24sp</dimen>
+    <dimen name="home_ai_button_subtitle_size">20sp</dimen>
+</resources>

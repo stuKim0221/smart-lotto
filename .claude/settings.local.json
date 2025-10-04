@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew:*)",
+      "Bash(cat:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:dhlottery.co.kr)",
+      "Bash(adb logcat:*)",
+      "Read(//c/Users/jsk00/AppData/Local/Android/Sdk/platform-tools/**)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:www.dhlottery.co.kr)",
+      "Bash(timeout:*)",
+      "Bash(./adb logcat -s CsvLottoDataService)",
+      "Bash(./adb logcat -c)",
+      "Bash(./adb logcat -s DataStatusActivity)",
+      "Bash(dir \"C:\\Users\\jsk00\\AndroidStudioProjects\\Lotto\\app\\src\\main\\res\")",
+      "Bash(findstr:*)",
+      "Bash(dir:*)",
+      "Bash(\"C:\\Users\\jsk00\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" logcat -c)",
+      "Bash(\"C:\\Users\\jsk00\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" logcat -s SettingsFragment:* ReminderScheduler:* BootReceiver:* DrawReminderReceiver:* LottoApp:*)",
+      "WebFetch(domain:android-developers.googleblog.com)",
+      "Bash(unzip:*)",
+      "Bash(grep:*)",
+      "Bash(\"C:\\Users\\jsk00\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" shell getconf PAGE_SIZE)",
+      "Read(//c/Users/jsk00/AppData/Local/Android/Sdk/build-tools/**)",
+      "Bash(\"C:\\Users\\jsk00\\AppData\\Local\\Android\\Sdk\\build-tools\\36.0.0\\zipalign.exe\" -c -p -v 16 \"C:\\Users\\jsk00\\AndroidStudioProjects\\Lotto\\app\\build\\outputs\\apk\\debug\\app-debug.apk\")",
+      "Bash(curl:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git reset:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

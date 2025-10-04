@@ -1,0 +1,149 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120"
+    android:tint="?attr/colorPrimary">
+
+    <!-- 외곽 경계 -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M10,10h100v100H10z"
+        android:strokeColor="?attr/colorPrimary"
+        android:strokeWidth="2"/>
+
+    <!-- 좌상단 큰 사각형 (QR 패턴) -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M15,15h25v25H15z"/>
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M18,18h19v19H18z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M21,21h13v13H21z"/>
+
+    <!-- 우상단 큰 사각형 (QR 패턴) -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M80,15h25v25H80z"/>
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M83,18h19v19H83z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M86,21h13v13H86z"/>
+
+    <!-- 좌하단 큰 사각형 (QR 패턴) -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M15,80h25v25H15z"/>
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M18,83h19v19H18z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M21,86h13v13H21z"/>
+
+    <!-- 중앙 데이터 패턴들 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M15,45h5v5H15z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M25,45h5v5H25z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M35,45h5v5H35z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M50,45h5v5H50z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M60,45h5v5H60z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M80,45h5v5H80z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M90,45h5v5H90z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M100,45h5v5H100z"/>
+
+    <!-- 세로 패턴들 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,15h5v5H45z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,25h5v5H45z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,35h5v5H45z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,55h5v5H45z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,65h5v5H45z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,80h5v5H45z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,90h5v5H45z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M45,100h5v5H45z"/>
+
+    <!-- 추가 데이터 패턴들 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M55,55h5v5H55z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M65,55h5v5H65z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M55,65h5v5H55z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M75,65h5v5H75z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M85,55h5v5H85z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M75,75h5v5H75z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M85,75h5v5H85z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M95,55h5v5H95z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M55,85h5v5H55z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M65,85h5v5H65z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M55,95h5v5H55z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M75,85h5v5H75z"/>
+
+    <!-- 중앙에 "W" (Winning) 느낌의 패턴 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M85,85h5v10H85z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M95,85h5v15H95z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M85,95h15v5H85z"/>
+
+</vector>

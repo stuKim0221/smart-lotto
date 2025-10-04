@@ -1,0 +1,107 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- QR 코드 배경 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M20,20h80v80H20z"
+        android:fillAlpha="0.1"/>
+
+    <!-- QR 코드 외곽선 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="?attr/colorPrimary"
+        android:strokeWidth="3"
+        android:pathData="M20,20h80v80H20z"/>
+
+    <!-- 좌상단 파인더 패턴 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M25,25h20v20H25z"/>
+    <path
+        android:fillColor="?attr/colorSurface"
+        android:pathData="M29,29h12v12H29z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M32,32h6v6H32z"/>
+
+    <!-- 우상단 파인더 패턴 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M75,25h20v20H75z"/>
+    <path
+        android:fillColor="?attr/colorSurface"
+        android:pathData="M79,29h12v12H79z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M82,32h6v6H82z"/>
+
+    <!-- 좌하단 파인더 패턴 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M25,75h20v20H25z"/>
+    <path
+        android:fillColor="?attr/colorSurface"
+        android:pathData="M29,79h12v12H29z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M32,82h6v6H32z"/>
+
+    <!-- 중앙 데이터 패턴 -->
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M55,50h4v4H55z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M65,50h4v4H65z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M50,55h4v4H50z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M60,55h4v4H60z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M70,55h4v4H70z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M55,60h4v4H55z"/>
+    <path
+        android:fillColor="?attr/colorPrimary"
+        android:pathData="M65,60h4v4H65z"/>
+
+    <!-- 스캐닝 라인들 (움직이는 느낌) -->
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M15,45h90v2H15z"
+        android:fillAlpha="0.8"/>
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M15,55h90v2H15z"
+        android:fillAlpha="0.6"/>
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M15,65h90v2H15z"
+        android:fillAlpha="0.4"/>
+
+    <!-- 우하단 당첨 표시 (작은 왕관 또는 별) -->
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M82,82h4v4H82z"/>
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M86,84h2v6H86z"/>
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M84,86h6v2H84z"/>
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M80,84h2v2H80z"/>
+    <path
+        android:fillColor="?attr/colorSecondary"
+        android:pathData="M90,84h2v2H90z"/>
+
+</vector>

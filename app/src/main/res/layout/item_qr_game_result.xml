@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_game_item"
+    android:layout_marginVertical="2dp"
+    android:layout_marginHorizontal="4dp"
+    android:padding="8dp">
+
+    <!-- 게임 헤더 (컴팩트) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="6dp">
+
+        <!-- 게임 라벨 -->
+        <TextView
+            android:id="@+id/tvGameLabel"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_game_label"
+            android:gravity="center"
+            android:text="A"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginEnd="8dp" />
+
+
+    </LinearLayout>
+
+        <!-- 로또 번호들 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="8dp">
+
+            <!-- 본번호 6개를 담는 컨테이너 -->
+            <LinearLayout
+                android:id="@+id/llMainNumbers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/number1"
+                    style="@style/LottoBall"
+                    android:layout_width="@dimen/lotto_ball_size"
+                    android:layout_height="@dimen/lotto_ball_size"
+                    android:layout_marginEnd="4dp"
+                    android:text="1" />
+
+                <TextView
+                    android:id="@+id/number2"
+                    style="@style/LottoBall"
+                    android:layout_width="@dimen/lotto_ball_size"
+                    android:layout_height="@dimen/lotto_ball_size"
+                    android:layout_marginEnd="4dp"
+                    android:text="2" />
+
+                <TextView
+                    android:id="@+id/number3"
+                    style="@style/LottoBall"
+                    android:layout_width="@dimen/lotto_ball_size"
+                    android:layout_height="@dimen/lotto_ball_size"
+                    android:layout_marginEnd="4dp"
+                    android:text="3" />
+
+                <TextView
+                    android:id="@+id/number4"
+                    style="@style/LottoBall"
+                    android:layout_width="@dimen/lotto_ball_size"
+                    android:layout_height="@dimen/lotto_ball_size"
+                    android:layout_marginEnd="4dp"
+                    android:text="4" />
+
+                <TextView
+                    android:id="@+id/number5"
+                    style="@style/LottoBall"
+                    android:layout_width="@dimen/lotto_ball_size"
+                    android:layout_height="@dimen/lotto_ball_size"
+                    android:layout_marginEnd="4dp"
+                    android:text="5" />
+
+                <TextView
+                    android:id="@+id/number6"
+                    style="@style/LottoBall"
+                    android:layout_width="@dimen/lotto_ball_size"
+                    android:layout_height="@dimen/lotto_ball_size"
+                    android:layout_marginEnd="8dp"
+                    android:text="6" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 당첨 정보 표시 영역 (당첨시에만 표시) -->
+        <LinearLayout
+            android:id="@+id/llWinInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/bg_win_info"
+            android:padding="12dp"
+            android:layout_marginTop="8dp">
+
+            <!-- 당첨 등수 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_trophy"
+                    app:tint="@color/win_color"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="당첨" />
+
+                <TextView
+                    android:id="@+id/tvWinRank"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5등 당첨!"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/tvMatchCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3개 일치"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white"
+                    android:alpha="0.8" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!-- 미당첨 정보 (미당첨시에만 표시) -->
+        <TextView
+            android:id="@+id/tvNoWin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="😔 아쉽게도 당첨되지 않았습니다"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:padding="8dp"
+            android:visibility="gone"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
