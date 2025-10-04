@@ -13,3 +13,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# 에러 로그
+hs_err_*.log
+replay_*.log
+
+# 릴리즈 빌드
+/app/release/
+/app/debug/
+
+# 임시 파일
+UPDATED_FILES.md
