@@ -1,140 +1,125 @@
 #!/usr/bin/env python3
-"""
-로또 데이터 자동 업데이트 스크립트
-
-매주 토요일 20:40부터 5분 간격으로 실행되며,
-새로운 회차 데이터가 공개되면 CSV를 업데이트하고 종료합니다.
-"""
-
-import sys
-import os
+import sys, os, json
 import requests
 import pandas as pd
 from datetime import datetime
-import time
 
-# 공식 로또 API
 LOTTO_API_URL = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={}"
-
-# CSV 파일 경로
 CSV_FILE = "draw_kor.csv"
 
-def get_latest_round():
-    """CSV 파일에서 최신 회차 번호를 가져옴"""
+HEADERS = {
+    "User-Agent": "smart-lotto-updater/1.0 (+github actions)"
+}
+
+REQUIRED_FIELDS = [
+    "drwNo", "drwNoDate", "drwtNo1", "drwtNo2", "drwtNo3",
+    "drwtNo4", "drwtNo5", "drwtNo6", "bnusNo"
+]
+
+COL_ORDER = ["year", "drawNo", "date", "n1", "n2", "n3", "n4", "n5", "n6", "bonus"]
+
+def read_csv_safe(path: str) -> pd.DataFrame:
+    if not os.path.exists(path):
+        return pd.DataFrame(columns=COL_ORDER)
     try:
-        df = pd.read_csv(CSV_FILE)
-        if not df.empty:
-            return int(df['drawNo'].max())
-        return 0
+        return pd.read_csv(path, dtype={"drawNo": "Int64"})
     except Exception as e:
         print(f"❌ Error reading CSV: {e}")
+        return pd.DataFrame(columns=COL_ORDER)
+
+def get_latest_round() -> int:
+    df = read_csv_safe(CSV_FILE)
+    if df.empty:
+        return 0
+    try:
+        return int(pd.to_numeric(df["drawNo"], errors="coerce").max())
+    except Exception:
         return 0
 
-def fetch_lotto_data(draw_no):
-    """공식 API에서 특정 회차 데이터 가져오기"""
+def fetch_lotto_data(draw_no: int):
+    url = LOTTO_API_URL.format(draw_no)
     try:
-        url = LOTTO_API_URL.format(draw_no)
-        response = requests.get(url, timeout=10)
-
-        if response.status_code != 200:
-            print(f"❌ HTTP Error: {response.status_code}")
+        r = requests.get(url, headers=HEADERS, timeout=5)
+        if r.status_code != 200:
+            print(f"❌ HTTP Error: {r.status_code}")
             return None
-
-        data = response.json()
-
-        # 성공 여부 확인
-        if data.get('returnValue') != 'success':
-            print(f"⏳ Round {draw_no} not available yet (returnValue: {data.get('returnValue')})")
-            return None
-
-        # 필수 데이터 확인
-        required_fields = ['drwNo', 'drwNoDate', 'drwtNo1', 'drwtNo2', 'drwtNo3',
-                          'drwtNo4', 'drwtNo5', 'drwtNo6', 'bnusNo']
-
-        if not all(field in data for field in required_fields):
-            print(f"❌ Missing required fields in response")
-            return None
-
-        return {
-            'year': int(data['drwNoDate'][:4]),
-            'drawNo': int(data['drwNo']),
-            'date': data['drwNoDate'],
-            'n1': int(data['drwtNo1']),
-            'n2': int(data['drwtNo2']),
-            'n3': int(data['drwtNo3']),
-            'n4': int(data['drwtNo4']),
-            'n5': int(data['drwtNo5']),
-            'n6': int(data['drwtNo6']),
-            'bonus': int(data['bnusNo'])
-        }
-
-    except requests.exceptions.Timeout:
-        print(f"⏱️ Timeout while fetching round {draw_no}")
-        return None
+        data = r.json()
     except requests.exceptions.RequestException as e:
         print(f"❌ Network error: {e}")
         return None
-    except Exception as e:
-        print(f"❌ Unexpected error: {e}")
+    except ValueError:
+        print("❌ Invalid JSON")
         return None
 
-def update_csv(new_data):
-    """CSV 파일에 새 데이터 추가"""
+    if data.get("returnValue") != "success":
+        print(f"⏳ Round {draw_no} not available yet (returnValue={data.get('returnValue')})")
+        return None
+
+    if not all(k in data for k in REQUIRED_FIELDS):
+        print("❌ Missing required fields in response")
+        return None
+
+    return {
+        "year": int(str(data["drwNoDate"])[:4]),
+        "drawNo": int(data["drwNo"]),
+        "date": data["drwNoDate"],
+        "n1": int(data["drwtNo1"]),
+        "n2": int(data["drwtNo2"]),
+        "n3": int(data["drwtNo3"]),
+        "n4": int(data["drwtNo4"]),
+        "n5": int(data["drwtNo5"]),
+        "n6": int(data["drwtNo6"]),
+        "bonus": int(data["bnusNo"]),
+    }
+
+def atomic_write_csv(df: pd.DataFrame, path: str):
+    tmp = path + ".tmp"
+    df.to_csv(tmp, index=False, encoding="utf-8")
+    os.replace(tmp, path)  # atomic on POSIX; best-effort on GitHub runner
+
+def update_csv(new_row: dict) -> bool:
+    df = read_csv_safe(CSV_FILE)
+
+    # append
+    row_df = pd.DataFrame([new_row])[COL_ORDER]
+    df = pd.concat([row_df, df], ignore_index=True)
+
+    # de-dup & sort
+    df = df.drop_duplicates(subset="drawNo", keep="first")
+    df["drawNo"] = pd.to_numeric(df["drawNo"], errors="coerce").astype("Int64")
+    df = df.sort_values("drawNo", ascending=False, na_position="last").reset_index(drop=True)
+
     try:
-        # 기존 CSV 읽기
-        df = pd.read_csv(CSV_FILE)
-
-        # 새 데이터를 DataFrame으로 변환
-        new_row = pd.DataFrame([new_data])
-
-        # 맨 위에 추가 (최신 데이터가 위로)
-        df = pd.concat([new_row, df], ignore_index=True)
-
-        # CSV 저장 (인덱스 제외)
-        df.to_csv(CSV_FILE, index=False)
-
-        print(f"✅ Successfully added round {new_data['drawNo']} to CSV")
-        print(f"   Date: {new_data['date']}")
-        print(f"   Numbers: {new_data['n1']}, {new_data['n2']}, {new_data['n3']}, "
-              f"{new_data['n4']}, {new_data['n5']}, {new_data['n6']} + {new_data['bonus']}")
+        atomic_write_csv(df, CSV_FILE)
+        print(f"✅ Added round {new_row['drawNo']} ({new_row['date']})")
+        nums = f"{new_row['n1']}, {new_row['n2']}, {new_row['n3']}, {new_row['n4']}, {new_row['n5']}, {new_row['n6']} + {new_row['bonus']}"
+        print(f"   Numbers: {nums}")
         return True
-
     except Exception as e:
-        print(f"❌ Error updating CSV: {e}")
+        print(f"❌ Error writing CSV: {e}")
         return False
 
 def main():
-    """메인 실행 함수"""
-    print(f"🎰 Lotto Data Update Script")
-    print(f"📅 Execution time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"=" * 60)
+    print("🎰 Lotto Data Update Script")
+    print(f"📅 {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC")
+    print("=" * 60)
 
-    # 1. 현재 CSV의 최신 회차 확인
     current_round = get_latest_round()
-    print(f"📊 Current latest round in CSV: {current_round}")
-
-    # 2. 다음 회차 번호 계산
     next_round = current_round + 1
-    print(f"🔍 Checking for round {next_round}...")
+    print(f"📊 Latest in CSV: {current_round} → 🔍 checking {next_round}")
 
-    # 3. API에서 다음 회차 데이터 가져오기
-    new_data = fetch_lotto_data(next_round)
+    data = fetch_lotto_data(next_round)
+    if data is None:
+        # 공개 전/변경 없음은 정상상황 → exit 0 (폴링 루프가 계속 확인)
+        print("ℹ️ No new data yet (normal before publish).")
+        sys.exit(0)
 
-    if new_data is None:
-        print(f"⏳ Round {next_round} is not available yet")
-        print(f"ℹ️ This is normal - the draw results are published randomly after 20:35")
-        print(f"✅ Will retry in the next scheduled run")
-        sys.exit(1)  # 실패 코드로 종료 (재시도 필요)
-
-    # 4. CSV 업데이트
-    if update_csv(new_data):
-        print(f"=" * 60)
-        print(f"🎉 Update completed successfully!")
-        print(f"✅ Round {next_round} has been added to {CSV_FILE}")
-        sys.exit(0)  # 성공 코드로 종료
+    if update_csv(data):
+        print("=" * 60)
+        print("🎉 Update completed successfully!")
+        sys.exit(0)
     else:
-        print(f"❌ Failed to update CSV")
-        sys.exit(1)  # 실패 코드로 종료
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
