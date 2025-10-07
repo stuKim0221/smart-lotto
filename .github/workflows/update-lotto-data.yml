@@ -1,13 +1,12 @@
 name: Update Lotto Data (Ultra-Low Latency)
 
 on:
-  # 토요일 20:40 KST에 한 번만 시작 → 내부에서 초단위 폴링
+  # 토요일 20:40 KST에 1회 시작 → 내부에서 초단위 폴링
   schedule:
     - cron: '40 11 * * 6'   # 11:40 UTC = 20:40 KST
-  workflow_dispatch:        # 수동 실행도 가능
+  workflow_dispatch:
 
 concurrency:
-  # 같은 브랜치/워크플로 동시 실행 차단 (run_id 쓰지 말 것!)
   group: update-lotto-data-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
@@ -31,7 +30,7 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install deps
       run: |
         pip install requests pandas
 
@@ -41,7 +40,6 @@ jobs:
         set -e
         git fetch origin main
         git checkout main
-        # 히스토리 보존 우선, 실패 시 하드 리셋
         git rebase origin/main || (echo "Rebase failed -> hard reset"; git reset --hard origin/main)
 
     - name: Poll until new round appears (~35m)
@@ -52,28 +50,22 @@ jobs:
         WINDOW_SECONDS: "2100"    # 약 35분
       run: |
         set -euo pipefail
-
         END_TS=$(( $(date -u +%s) + WINDOW_SECONDS ))
         RESULT="timeout"
-
         echo "Start polling every ${POLL_INTERVAL_SECS}s for ~$((WINDOW_SECONDS/60)) minutes."
 
         while [ "$(date -u +%s)" -lt "$END_TS" ]; do
           echo "🔎 Check @ $(date -u +'%-H:%M:%S UTC')"
 
-          # update_lotto_data.py는 내부에서 ETag/Last-Modified를 사용하도록 구현 권장
           if python scripts/update_lotto_data.py; then
-            # 스크립트 성공 → 변경사항이 실제 생겼는지 확인
             if [ -n "$(git status --porcelain)" ]; then
               CURRENT_ROUND=$(python -c "import sys; sys.path.insert(0, 'scripts'); from update_lotto_data import get_latest_round; print(get_latest_round())" 2>/dev/null || echo "unknown")
               echo "New changes detected for round: ${CURRENT_ROUND}"
 
               git config --local user.email "github-actions[bot]@users.noreply.github.com"
               git config --local user.name "github-actions[bot]"
-              git add -A
+              git add -f app/src/main/assets/draw_kor.csv
               git commit -m "Auto-update lotto data - Round ${CURRENT_ROUND} ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-
-              # 푸시 충돌 대응 1회 재시도
               git push || (git pull --rebase --autostash origin main && git push)
               RESULT="updated"
               break
