@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import sys, os, json
+import sys, os
 import requests
 import pandas as pd
 from datetime import datetime
 
 LOTTO_API_URL = "https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={}"
-CSV_FILE = "draw_kor.csv"
+CSV_FILE = "app/src/main/assets/draw_kor.csv"  # ★ assets 경로로 고정
 
 HEADERS = {
     "User-Agent": "smart-lotto-updater/1.0 (+github actions)"
@@ -20,7 +20,11 @@ COL_ORDER = ["year", "drawNo", "date", "n1", "n2", "n3", "n4", "n5", "n6", "bonu
 
 def read_csv_safe(path: str) -> pd.DataFrame:
     if not os.path.exists(path):
-        return pd.DataFrame(columns=COL_ORDER)
+        # 빈 CSV 초기화
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        df = pd.DataFrame(columns=COL_ORDER)
+        df.to_csv(path, index=False, encoding="utf-8")
+        return df
     try:
         return pd.read_csv(path, dtype={"drawNo": "Int64"})
     except Exception as e:
@@ -75,16 +79,12 @@ def fetch_lotto_data(draw_no: int):
 def atomic_write_csv(df: pd.DataFrame, path: str):
     tmp = path + ".tmp"
     df.to_csv(tmp, index=False, encoding="utf-8")
-    os.replace(tmp, path)  # atomic on POSIX; best-effort on GitHub runner
+    os.replace(tmp, path)
 
 def update_csv(new_row: dict) -> bool:
     df = read_csv_safe(CSV_FILE)
-
-    # append
     row_df = pd.DataFrame([new_row])[COL_ORDER]
     df = pd.concat([row_df, df], ignore_index=True)
-
-    # de-dup & sort
     df = df.drop_duplicates(subset="drawNo", keep="first")
     df["drawNo"] = pd.to_numeric(df["drawNo"], errors="coerce").astype("Int64")
     df = df.sort_values("drawNo", ascending=False, na_position="last").reset_index(drop=True)
@@ -110,7 +110,7 @@ def main():
 
     data = fetch_lotto_data(next_round)
     if data is None:
-        # 공개 전/변경 없음은 정상상황 → exit 0 (폴링 루프가 계속 확인)
+        # 공개 전은 정상: 변경 없음 → 0 종료 (폴링 계속됨)
         print("ℹ️ No new data yet (normal before publish).")
         sys.exit(0)
 
