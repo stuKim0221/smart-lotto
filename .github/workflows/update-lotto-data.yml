@@ -1,60 +1,33 @@
-name: Update Lotto Data (Smart Retry)
+name: Update Lotto Data (Ultra-Low Latency)
 
 on:
+  # 토요일 20:40 KST에 한 번만 시작 → 내부에서 초단위 폴링
   schedule:
-    # 매주 토요일 20:40 KST부터 1분 간격으로 체크 (11:40~12:10 UTC)
-    - cron: '40 11 * * 6'
-    - cron: '41 11 * * 6'
-    - cron: '42 11 * * 6'
-    - cron: '43 11 * * 6'
-    - cron: '44 11 * * 6'
-    - cron: '45 11 * * 6'
-    - cron: '46 11 * * 6'
-    - cron: '47 11 * * 6'
-    - cron: '48 11 * * 6'
-    - cron: '49 11 * * 6'
-    - cron: '50 11 * * 6'
-    - cron: '51 11 * * 6'
-    - cron: '52 11 * * 6'
-    - cron: '53 11 * * 6'
-    - cron: '54 11 * * 6'
-    - cron: '55 11 * * 6'
-    - cron: '56 11 * * 6'
-    - cron: '57 11 * * 6'
-    - cron: '58 11 * * 6'
-    - cron: '59 11 * * 6'
-    - cron: '0 12 * * 6'
-    - cron: '1 12 * * 6'
-    - cron: '2 12 * * 6'
-    - cron: '3 12 * * 6'
-    - cron: '4 12 * * 6'
-    - cron: '5 12 * * 6'
-    - cron: '6 12 * * 6'
-    - cron: '7 12 * * 6'
-    - cron: '8 12 * * 6'
-    - cron: '9 12 * * 6'
-    - cron: '10 12 * * 6'
-  workflow_dispatch:
+    - cron: '40 11 * * 6'   # 11:40 UTC = 20:40 KST
+  workflow_dispatch:        # 수동 실행도 가능
 
 concurrency:
-  group: update-lotto-data-${{ github.run_id }}
-  cancel-in-progress: false
+  # 같은 브랜치/워크플로 동시 실행 차단 (run_id 쓰지 말 것!)
+  group: update-lotto-data-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
       contents: write
 
     steps:
-    - name: Checkout repository
+    - name: Checkout
       uses: actions/checkout@v4
       with:
         ref: main
         fetch-depth: 0
+        persist-credentials: true
 
     - name: Setup Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
@@ -62,76 +35,62 @@ jobs:
       run: |
         pip install requests pandas
 
-    # 이미 이번 주 업데이트가 완료되었는지 확인
-    - name: Check if already updated this week
-      id: check_update
+    - name: Sync with origin/main
+      shell: bash
       run: |
-        CURRENT_WEEK=$(date -u +%Y-W%U)
-        LAST_UPDATE_WEEK=$(git log -1 --grep="Auto-update lotto data" --format=%cd --date=format:'%Y-W%U' 2>/dev/null || echo "none")
+        set -e
+        git fetch origin main
+        git checkout main
+        # 히스토리 보존 우선, 실패 시 하드 리셋
+        git rebase origin/main || (echo "Rebase failed -> hard reset"; git reset --hard origin/main)
 
-        echo "Current week: $CURRENT_WEEK"
-        echo "Last update week: $LAST_UPDATE_WEEK"
-
-        if [ "$CURRENT_WEEK" = "$LAST_UPDATE_WEEK" ]; then
-          echo "already_updated=true" >> $GITHUB_OUTPUT
-          echo "✅ Already updated this week ($CURRENT_WEEK). Skipping."
-        else
-          echo "already_updated=false" >> $GITHUB_OUTPUT
-          echo "🔄 Not updated yet this week. Proceeding."
-        fi
-
-    # 업데이트가 필요한 경우에만 실행
-    - name: Run data update script
-      if: steps.check_update.outputs.already_updated == 'false'
-      id: update_script
+    - name: Poll until new round appears (~35m)
+      id: poll
+      shell: bash
+      env:
+        POLL_INTERVAL_SECS: "5"   # 5~10초 추천
+        WINDOW_SECONDS: "2100"    # 약 35분
       run: |
-        python scripts/update_lotto_data.py
+        set -euo pipefail
 
-        # 스크립트 종료 코드 확인
-        if [ $? -eq 0 ]; then
-          echo "update_success=true" >> $GITHUB_OUTPUT
-        else
-          echo "update_success=false" >> $GITHUB_OUTPUT
-        fi
+        END_TS=$(( $(date -u +%s) + WINDOW_SECONDS ))
+        RESULT="timeout"
 
-    # 파일 변경사항이 있고 업데이트가 성공한 경우에만 커밋
-    - name: Check for changes
-      if: steps.check_update.outputs.already_updated == 'false' && steps.update_script.outputs.update_success == 'true'
-      id: check_changes
-      run: |
-        if [ -n "$(git status --porcelain)" ]; then
-          echo "has_changes=true" >> $GITHUB_OUTPUT
-          echo "✅ Changes detected"
-        else
-          echo "has_changes=false" >> $GITHUB_OUTPUT
-          echo "ℹ️ No changes detected"
-        fi
+        echo "Start polling every ${POLL_INTERVAL_SECS}s for ~$((WINDOW_SECONDS/60)) minutes."
 
-    - name: Commit and push changes
-      if: steps.check_changes.outputs.has_changes == 'true'
-      run: |
-        CURRENT_ROUND=$(python -c "import sys; sys.path.insert(0, 'scripts'); from update_lotto_data import get_latest_round; print(get_latest_round())" 2>/dev/null || echo "unknown")
+        while [ "$(date -u +%s)" -lt "$END_TS" ]; do
+          echo "🔎 Check @ $(date -u +'%-H:%M:%S UTC')"
 
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add .
-        git commit -m "Auto-update lotto data - Round ${CURRENT_ROUND} ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-        git push
+          # update_lotto_data.py는 내부에서 ETag/Last-Modified를 사용하도록 구현 권장
+          if python scripts/update_lotto_data.py; then
+            # 스크립트 성공 → 변경사항이 실제 생겼는지 확인
+            if [ -n "$(git status --porcelain)" ]; then
+              CURRENT_ROUND=$(python -c "import sys; sys.path.insert(0, 'scripts'); from update_lotto_data import get_latest_round; print(get_latest_round())" 2>/dev/null || echo "unknown")
+              echo "New changes detected for round: ${CURRENT_ROUND}"
 
-    # 결과 요약
+              git config --local user.email "github-actions[bot]@users.noreply.github.com"
+              git config --local user.name "github-actions[bot]"
+              git add -A
+              git commit -m "Auto-update lotto data - Round ${CURRENT_ROUND} ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+
+              # 푸시 충돌 대응 1회 재시도
+              git push || (git pull --rebase --autostash origin main && git push)
+              RESULT="updated"
+              break
+            else
+              echo "No changes yet (source not updated)."
+            fi
+          else
+            echo "Script returned non-zero; retrying..."
+          fi
+
+          sleep "${POLL_INTERVAL_SECS}"
+        done
+
+        echo "result=${RESULT}" >> "$GITHUB_OUTPUT"
+
     - name: Summary
       if: always()
       run: |
         echo "## Update Summary" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        if [ "${{ steps.check_update.outputs.already_updated }}" = "true" ]; then
-          echo "✅ Already updated this week - skipped" >> $GITHUB_STEP_SUMMARY
-        elif [ "${{ steps.update_script.outputs.update_success }}" = "true" ]; then
-          if [ "${{ steps.check_changes.outputs.has_changes }}" = "true" ]; then
-            echo "✅ Successfully updated and committed" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "ℹ️ Update successful but no changes detected" >> $GITHUB_STEP_SUMMARY
-          fi
-        else
-          echo "❌ Update failed - will retry in next schedule" >> $GITHUB_STEP_SUMMARY
-        fi
+        echo "- Result: ${{ steps.poll.outputs.result }}" >> $GITHUB_STEP_SUMMARY
