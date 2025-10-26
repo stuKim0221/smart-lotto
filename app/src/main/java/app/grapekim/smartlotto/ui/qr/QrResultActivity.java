@@ -9,9 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.OptIn;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.ExperimentalGetImage;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -33,7 +31,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@OptIn(markerClass = ExperimentalGetImage.class)
 public class QrResultActivity extends AppCompatActivity {
 
     private static final String TAG = "QrResultActivity";
@@ -102,7 +99,13 @@ public class QrResultActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         btnScanAgain.setOnClickListener(v -> {
-            Intent intent = new Intent(this, QrScanActivity.class);
+            Intent intent = new Intent(this, ZxingScanActivity.class);
+            // 현재 모드를 유지하여 전달
+            if (isWinningCheck) {
+                intent.putExtra("SCAN_MODE", ZxingScanActivity.SCAN_MODE_WINNING_CHECK);
+            } else {
+                intent.putExtra("SCAN_MODE", ZxingScanActivity.SCAN_MODE_ADD_NUMBERS);
+            }
             startActivity(intent);
             finish();
         });
@@ -227,6 +230,12 @@ public class QrResultActivity extends AppCompatActivity {
     private void saveGamesToRepository(QrLottoParser.Result result) {
         executor.execute(() -> {
             try {
+                // Activity 종료 체크
+                if (isFinishing() || isDestroyed()) {
+                    Log.w(TAG, "Activity 종료됨, 저장 중단");
+                    return;
+                }
+
                 // 빈 게임 제거 후 저장
                 List<List<Integer>> validGames = new ArrayList<>();
                 for (List<Integer> game : result.allGames) {
@@ -309,11 +318,18 @@ public class QrResultActivity extends AppCompatActivity {
      */
     private void syncGitHubDataAndNavigate() {
         executor.execute(() -> {
+            LottoDataLoader loader = null;
             try {
+                // Activity 종료 체크
+                if (isFinishing() || isDestroyed()) {
+                    Log.w(TAG, "Activity 종료됨, 동기화 중단");
+                    return;
+                }
+
                 Log.d(TAG, "QR 결과 저장 후 GitHub CSV 동기화 시작");
 
                 // GitHub CSV 동기화 시도
-                LottoDataLoader loader = new LottoDataLoader(getApplicationContext(), repository);
+                loader = new LottoDataLoader(getApplicationContext(), repository);
                 boolean syncSuccess = loader.loadLottoDataSync();
 
                 if (syncSuccess) {
@@ -326,8 +342,17 @@ public class QrResultActivity extends AppCompatActivity {
                 Log.e(TAG, "GitHub CSV 동기화 중 오류 발생", e);
                 // 동기화 실패해도 계속 진행
             } finally {
+                // LottoDataLoader의 ExecutorService 정리
+                if (loader != null) {
+                    loader.shutdown();
+                }
+
                 // UI 스레드에서 화면 이동 실행
-                runOnUiThread(this::navigateToHistory);
+                runOnUiThread(() -> {
+                    if (!isFinishing() && !isDestroyed()) {
+                        navigateToHistory();
+                    }
+                });
             }
         });
     }
@@ -363,16 +388,60 @@ public class QrResultActivity extends AppCompatActivity {
             return;
         }
 
+        // 로딩 메시지 표시
+        showLoadingMessage();
 
         // 백그라운드에서 당첨 확인 실행
         executor.execute(() -> checkWinningNumbers(parseResult));
     }
 
     /**
-     * 당첨 번호 확인
+     * 로딩 메시지 표시
+     */
+    private void showLoadingMessage() {
+        llGamesContainer.removeAllViews();
+
+        TextView loadingView = new TextView(this);
+        loadingView.setText("GitHub에서 최신 당첨번호 데이터를 가져오는 중...\n잠시만 기다려주세요.");
+        loadingView.setTextSize(16f);
+        loadingView.setTextColor(ContextCompat.getColor(this, R.color.blue_600));
+        loadingView.setPadding(16, 32, 16, 32);
+        loadingView.setGravity(android.view.Gravity.CENTER);
+        loadingView.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_50));
+
+        llGamesContainer.addView(loadingView);
+        llGamesContainer.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 당첨 번호 확인 - QR에서 파싱된 회차 조회 (GitHub CSV 우선)
      */
     private void checkWinningNumbers(QrLottoParser.Result parseResult) {
+        LottoDataLoader loader = null;
         try {
+            // Activity가 종료되었는지 확인
+            if (isFinishing() || isDestroyed()) {
+                Log.w(TAG, "Activity 종료됨, 당첨 확인 중단");
+                return;
+            }
+
+            // GitHub CSV에서 최신 데이터 업데이트 시도
+            Log.d(TAG, "GitHub CSV 데이터 업데이트 시도");
+            loader = new LottoDataLoader(getApplicationContext(), repository);
+            boolean updated = loader.loadLottoDataSync();
+
+            if (updated) {
+                Log.d(TAG, "GitHub CSV 데이터 업데이트 성공");
+            } else {
+                Log.d(TAG, "GitHub CSV 업데이트 실패, 기존 로컬 데이터 사용");
+            }
+
+            // Activity 종료 체크
+            if (isFinishing() || isDestroyed()) {
+                Log.w(TAG, "Activity 종료됨, 당첨 확인 중단");
+                return;
+            }
+
             LottoDrawHistoryEntity targetDraw = null;
             int targetRound = 0;
 
@@ -388,7 +457,11 @@ public class QrResultActivity extends AppCompatActivity {
                 Log.d(TAG, "해당 회차(" + targetRound + ") 데이터 없음");
 
                 final int missingRound = targetRound;
-                runOnUiThread(() -> showDataMissingError(missingRound, parseResult));
+                runOnUiThread(() -> {
+                    if (!isFinishing() && !isDestroyed()) {
+                        showDataMissingError(missingRound, parseResult);
+                    }
+                });
                 return;
             }
 
@@ -406,11 +479,24 @@ public class QrResultActivity extends AppCompatActivity {
 
             // UI 스레드에서 당첨 결과 표시
             final int finalRound = targetRound;
-            runOnUiThread(() -> displayWinningResults(parseResult.allGames, winningNumbers, bonusNumber, finalRound));
+            runOnUiThread(() -> {
+                if (!isFinishing() && !isDestroyed()) {
+                    displayWinningResults(parseResult.allGames, winningNumbers, bonusNumber, finalRound);
+                }
+            });
 
         } catch (Exception e) {
             Log.e(TAG, "당첨 확인 중 오류", e);
-            runOnUiThread(() -> showWinningError("당첨 확인 중 오류가 발생했습니다."));
+            runOnUiThread(() -> {
+                if (!isFinishing() && !isDestroyed()) {
+                    showWinningError("당첨 확인 중 오류가 발생했습니다.");
+                }
+            });
+        } finally {
+            // LottoDataLoader의 ExecutorService 정리
+            if (loader != null) {
+                loader.shutdown();
+            }
         }
     }
 
@@ -663,7 +749,9 @@ public class QrResultActivity extends AppCompatActivity {
 
         btnRetry.setOnClickListener(v -> {
             // 데이터 업데이트 없이 바로 재시도
-            executor.execute(() -> checkWinningNumbers(parseResult));
+            if (!isFinishing() && !isDestroyed()) {
+                executor.execute(() -> checkWinningNumbers(parseResult));
+            }
         });
 
         llGamesContainer.addView(btnRetry);
@@ -676,14 +764,25 @@ public class QrResultActivity extends AppCompatActivity {
      */
     private void updateDrawDataAndRetry(int targetRound, QrLottoParser.Result parseResult, Button updateButton) {
         executor.execute(() -> {
+            LottoDataLoader loader = null;
             try {
+                // Activity 종료 체크
+                if (isFinishing() || isDestroyed()) {
+                    Log.w(TAG, "Activity 종료됨, 업데이트 중단");
+                    return;
+                }
+
                 Log.d(TAG, "당첨번호 데이터 업데이트 시작");
 
                 // CSV 데이터 로더를 사용해서 최신 데이터 동기화
-                LottoDataLoader loader = new LottoDataLoader(getApplicationContext(), repository);
+                loader = new LottoDataLoader(getApplicationContext(), repository);
                 boolean updateSuccess = loader.loadLottoDataSync();
 
                 runOnUiThread(() -> {
+                    if (isFinishing() || isDestroyed()) {
+                        return;
+                    }
+
                     updateButton.setEnabled(true);
 
                     if (updateSuccess) {
@@ -703,10 +802,17 @@ public class QrResultActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e(TAG, "데이터 업데이트 중 오류", e);
                 runOnUiThread(() -> {
-                    updateButton.setEnabled(true);
-                    updateButton.setText("업데이트 실패");
-                    Toast.makeText(this, "데이터 업데이트 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    if (!isFinishing() && !isDestroyed()) {
+                        updateButton.setEnabled(true);
+                        updateButton.setText("업데이트 실패");
+                        Toast.makeText(this, "데이터 업데이트 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 });
+            } finally {
+                // LottoDataLoader의 ExecutorService 정리
+                if (loader != null) {
+                    loader.shutdown();
+                }
             }
         });
     }
@@ -836,7 +942,16 @@ public class QrResultActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (executor != null && !executor.isShutdown()) {
-            executor.shutdown();
+            executor.shutdownNow();  // 즉시 중단 (shutdown 대신 shutdownNow 사용)
+            try {
+                // 최대 2초 대기 후 강제 종료
+                if (!executor.awaitTermination(2, java.util.concurrent.TimeUnit.SECONDS)) {
+                    Log.w(TAG, "Executor did not terminate in time");
+                }
+            } catch (InterruptedException e) {
+                Log.e(TAG, "Executor termination interrupted", e);
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
