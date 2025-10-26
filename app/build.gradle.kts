@@ -13,10 +13,17 @@ android {
     signingConfigs {
         create("release") {
             // 키스토어 정보 - local.properties에서 읽어옴
-            storeFile = file(project.findProperty("MYAPP_RELEASE_STORE_FILE") as String? ?: "my-release-key.keystore")
-            storePassword = project.findProperty("MYAPP_RELEASE_STORE_PASSWORD") as String?
-            keyAlias = project.findProperty("MYAPP_RELEASE_KEY_ALIAS") as String?
-            keyPassword = project.findProperty("MYAPP_RELEASE_KEY_PASSWORD") as String?
+            val keystorePath = project.findProperty("MYAPP_RELEASE_STORE_FILE") as String?
+            if (keystorePath != null && file(keystorePath).exists()) {
+                storeFile = file(keystorePath)
+                storePassword = project.findProperty("MYAPP_RELEASE_STORE_PASSWORD") as String?
+                keyAlias = project.findProperty("MYAPP_RELEASE_KEY_ALIAS") as String?
+                keyPassword = project.findProperty("MYAPP_RELEASE_KEY_PASSWORD") as String?
+            } else {
+                // 키스토어 파일이 없으면 디버그 키로 서명 (개발용)
+                // 프로덕션 릴리즈 시에는 local.properties에 키스토어 정보 필수
+                logger.warn("⚠️  릴리즈 키스토어를 찾을 수 없습니다. 디버그 키로 서명합니다.")
+            }
         }
     }
 
@@ -24,8 +31,8 @@ android {
         applicationId = "app.grapekim.smartlotto"
         minSdk = 26
         targetSdk = 35
-        versionCode = 22
-        versionName = "1.2"
+        versionCode = 34
+        versionName = "1.2.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -48,8 +55,14 @@ android {
                 "proguard-rules.pro"
             )
 
-            // 릴리즈 빌드에 키스토어 적용
-            signingConfig = signingConfigs.getByName("release")
+            // 릴리즈 빌드에 키스토어 적용 (키스토어가 설정된 경우에만)
+            val releaseSigningConfig = signingConfigs.getByName("release")
+            if (releaseSigningConfig.storeFile != null) {
+                signingConfig = releaseSigningConfig
+            } else {
+                // 키스토어가 없으면 디버그 서명 사용
+                signingConfig = signingConfigs.getByName("debug")
+            }
 
             // 실제 프로덕션 AdMob ID들
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"ca-app-pub-5416988082526174/7410355538\"")
@@ -59,13 +72,9 @@ android {
         }
     }
 
-    // 16KB 페이지 크기 지원 (Android 15+)
-    // AGP 8.5.1+ 에서는 자동으로 네이티브 라이브러리를 16KB 정렬
-    // useLegacyPackaging = true 는 하위 호환성을 위해 유지
+    // ==================== 패키징 설정 ====================
+    // ZXing은 순수 자바 라이브러리이므로 16KB 페이지 크기 문제 없음
     packaging {
-        jniLibs {
-            useLegacyPackaging = true
-        }
         resources {
             excludes.addAll(listOf("/META-INF/{AL2.0,LGPL2.1}"))
         }
@@ -111,14 +120,18 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // --- CameraX (BOM으로 버전 일원화) ---
-    implementation(libs.camera.core)
-    implementation(libs.camera.camera2)
-    implementation(libs.camera.lifecycle)
-    implementation(libs.camera.view)
+    // --- CameraX 제거 ---
+    // ZXing 스캐너가 자체 카메라 구현 제공하므로 불필요
+    // implementation(libs.camera.core)
+    // implementation(libs.camera.camera2)
+    // implementation(libs.camera.lifecycle)
+    // implementation(libs.camera.view)
 
-    // --- ML Kit: Barcode Scanning ---
-    implementation(libs.mlkit.barcode)
+    // --- ZXing: QR 코드 스캐너 ---
+    // 순수 자바 기반 (네이티브 라이브러리 없음)
+    // Android 15+ 16KB 페이지 크기 완벽 지원
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.zxing:core:3.5.3")
 
     // --- Google Play Services ---
     implementation(libs.play.services.ads)

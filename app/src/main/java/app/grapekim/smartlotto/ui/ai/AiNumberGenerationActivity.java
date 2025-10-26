@@ -60,6 +60,8 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
 
     // UI 요소들
     private ImageButton btnBack;
+    private MaterialButton btnRandomPureStats;
+    private MaterialButton btnRandomCombination;
     private ProgressBar progressBar;
     private TextView tvCurrentMode;
     private MaterialCardView cardPureStatisticsSettings;
@@ -119,6 +121,8 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
     private void initializeViews() {
         // 상단 바
         btnBack = findViewById(R.id.btnBack);
+        btnRandomPureStats = findViewById(R.id.btnRandomPureStats);
+        btnRandomCombination = findViewById(R.id.btnRandomCombination);
 
         // 분석 모드 관련 UI
         tvCurrentMode = findViewById(R.id.tvCurrentMode);
@@ -174,6 +178,15 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
         // 뒤로가기 버튼
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> finish());
+        }
+
+        // 랜덤 선택 버튼들
+        if (btnRandomPureStats != null) {
+            btnRandomPureStats.setOnClickListener(v -> randomSelectPureStats());
+        }
+
+        if (btnRandomCombination != null) {
+            btnRandomCombination.setOnClickListener(v -> randomSelectCombination());
         }
 
         // AI 생성 버튼 (리워드 광고 시청 후 생성)
@@ -952,5 +965,84 @@ public class AiNumberGenerationActivity extends AppCompatActivity {
 
         Log.w(TAG, "ConnectivityManager를 가져올 수 없음");
         return false;
+    }
+
+    /**
+     * 순수 통계 모드 전략 랜덤 선택
+     */
+    private void randomSelectPureStats() {
+        // 모든 체크박스 리스트
+        List<CheckBox> pureStatsCheckboxes = new ArrayList<>();
+        pureStatsCheckboxes.add(cbPurePopular);
+        pureStatsCheckboxes.add(cbPureNeglected);
+        pureStatsCheckboxes.add(cbPureRecent);
+        pureStatsCheckboxes.add(cbPureHighWeight);
+        pureStatsCheckboxes.add(cbPureBalance);
+        pureStatsCheckboxes.add(cbPureCyclic);
+        pureStatsCheckboxes.add(cbPureCorrelation);
+        pureStatsCheckboxes.add(cbPureRegression);
+
+        // 먼저 모든 체크박스 해제
+        for (CheckBox cb : pureStatsCheckboxes) {
+            if (cb != null) {
+                cb.setChecked(false);
+            }
+        }
+
+        // 랜덤하게 1~4개 선택
+        java.util.Random random = new java.util.Random();
+        int count = random.nextInt(4) + 1; // 1~4개
+
+        // 랜덤하게 선택
+        java.util.Collections.shuffle(pureStatsCheckboxes);
+        for (int i = 0; i < count && i < pureStatsCheckboxes.size(); i++) {
+            CheckBox cb = pureStatsCheckboxes.get(i);
+            if (cb != null) {
+                cb.setChecked(true);
+            }
+        }
+
+        Toast.makeText(this, "🎲 랜덤으로 " + count + "개 전략 선택됨", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 조합 모드 전략 랜덤 선택
+     */
+    private void randomSelectCombination() {
+        // 모든 체크박스 리스트
+        List<CheckBox> combinationCheckboxes = new ArrayList<>();
+        combinationCheckboxes.add(cbPopular);
+        combinationCheckboxes.add(cbNeglected);
+        combinationCheckboxes.add(cbTrend);
+        combinationCheckboxes.add(cbPair);
+        combinationCheckboxes.add(cbOddEven);
+        combinationCheckboxes.add(cbZone);
+        combinationCheckboxes.add(cbConsecutive);
+        combinationCheckboxes.add(cbLastDigit);
+        combinationCheckboxes.add(cbVisualPattern);
+        combinationCheckboxes.add(cbAvoidance);
+        combinationCheckboxes.add(cbLucky);
+
+        // 먼저 모든 체크박스 해제
+        for (CheckBox cb : combinationCheckboxes) {
+            if (cb != null) {
+                cb.setChecked(false);
+            }
+        }
+
+        // 랜덤하게 2~5개 선택
+        java.util.Random random = new java.util.Random();
+        int count = random.nextInt(4) + 2; // 2~5개
+
+        // 랜덤하게 선택
+        java.util.Collections.shuffle(combinationCheckboxes);
+        for (int i = 0; i < count && i < combinationCheckboxes.size(); i++) {
+            CheckBox cb = combinationCheckboxes.get(i);
+            if (cb != null) {
+                cb.setChecked(true);
+            }
+        }
+
+        Toast.makeText(this, "🎲 랜덤으로 " + count + "개 전략 선택됨", Toast.LENGTH_SHORT).show();
     }
 }

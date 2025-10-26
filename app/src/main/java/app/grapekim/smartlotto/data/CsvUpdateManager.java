@@ -22,7 +22,7 @@ import app.grapekim.smartlotto.util.LottoDrawCalculator;
 
 public class CsvUpdateManager {
     private static final String TAG = "CsvUpdateManager";
-    private static final String CSV_URL = "https://raw.githubusercontent.com/stuKim0221/smart-lotto/refs/heads/main/draw_kor.csv";
+    private static final String CSV_URL = "https://raw.githubusercontent.com/stuKim0221/smart-lotto/refs/heads/main/app/src/main/assets/draw_kor.csv";
     private static final String CSV_FILE_NAME = "draw_kor.csv";
 
     // 자동 업데이트 관련 상수 (매일 확인으로 변경)

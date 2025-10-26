@@ -12,21 +12,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.OptIn;
-import androidx.camera.core.ExperimentalGetImage;
 
 import app.grapekim.smartlotto.R;
 import app.grapekim.smartlotto.data.remote.dto.LottoDrawDto;
 import app.grapekim.smartlotto.ui.ai.AiNumberGenerationActivity;
 import app.grapekim.smartlotto.ui.base.BaseFragment;
 import app.grapekim.smartlotto.ui.manual.ManualInputActivity;
+import app.grapekim.smartlotto.ui.qr.ZxingScanActivity;
 import app.grapekim.smartlotto.util.SafeUtils;
 import com.google.android.material.card.MaterialCardView;
 
 /**
  * 홈 화면 Fragment (MVVM 패턴 적용 + 고정 구슬 크기)
  */
-@OptIn(markerClass = ExperimentalGetImage.class)
 public class HomeFragment extends BaseFragment<HomeViewModel> {
 
     // UI 요소들
@@ -85,14 +83,18 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
 
     @Override
     protected void setupClickListeners() {
-        // QR 당첨 확인: QR 스캔을 통한 즉시 당첨 결과 확인
+        // QR 당첨 확인: ZXing 스캐너로 즉시 당첨 결과 확인
         View.OnClickListener qrCheckAction = v -> SafeUtils.safeRun(() -> {
             try {
-                Intent intent = new Intent(requireContext(), app.grapekim.smartlotto.ui.qr.QrScanActivity.class);
-                intent.putExtra("SCAN_MODE", "WINNING_CHECK");
+                android.util.Log.d("HomeFragment", "QR 버튼 클릭됨");
+                Intent intent = new Intent(requireContext(), ZxingScanActivity.class);
+                intent.putExtra("SCAN_MODE", ZxingScanActivity.SCAN_MODE_WINNING_CHECK);
+                android.util.Log.d("HomeFragment", "Intent 생성 완료, Activity 시작");
                 startActivity(intent);
+                android.util.Log.d("HomeFragment", "startActivity 호출 완료");
             } catch (Exception e) {
-                showToast("QR 스캔 화면을 열 수 없습니다.");
+                android.util.Log.e("HomeFragment", "QR 스캔 시작 실패", e);
+                showToast("QR 스캔 화면을 열 수 없습니다: " + e.getMessage());
             }
         });
 

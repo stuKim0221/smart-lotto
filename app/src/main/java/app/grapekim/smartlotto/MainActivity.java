@@ -13,6 +13,7 @@ import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 
 import androidx.activity.EdgeToEdge;  // 🚨 새로 추가된 import
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     // AI 데이터 정리 완료 체크용 키
     private static final String PREF_AI_DATA_FIXED = "ai_data_fixed_v1";
 
+    // 뒤로가기 두 번 종료 관련 변수
+    private static final long BACK_PRESS_INTERVAL = 2000; // 2초
+    private long lastBackPressTime = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // 🚨 Android 15 권장사항: EdgeToEdge 활성화
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
             initializeNavigation();
             setupBottomNavigation();
+            setupBackPressHandler(); // 뒤로가기 핸들러 설정
             handleIntentExtras(); // Intent extra 처리
         } catch (Exception e) {
             android.util.Log.e("MainActivity", "초기화 실패", e);
@@ -769,6 +775,53 @@ public class MainActivity extends AppCompatActivity {
         // 상단 AppBar의 뒤로가기 버튼 처리
         // 현재는 ActionBar를 사용하지 않으므로 기본 동작 유지
         return navController != null && navController.navigateUp() || super.onSupportNavigateUp();
+    }
+
+    /**
+     * 뒤로가기 버튼 핸들러 설정 (Android 13+ 대응)
+     */
+    private void setupBackPressHandler() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // NavController가 백스택을 처리할 수 있는지 확인
+                if (navController != null && navController.getCurrentDestination() != null) {
+                    int currentDestId = navController.getCurrentDestination().getId();
+
+                    // 홈 화면(시작 destination)에서만 두 번 뒤로가기로 종료
+                    if (currentDestId == R.id.homeFragment) {
+                        long currentTime = System.currentTimeMillis();
+
+                        if (currentTime - lastBackPressTime < BACK_PRESS_INTERVAL) {
+                            // 2초 이내에 다시 눌렀으면 앱 종료
+                            android.util.Log.d("MainActivity", "두 번째 뒤로가기 - 앱 종료");
+                            finish();
+                        } else {
+                            // 첫 번째 뒤로가기 - 토스트 메시지 표시
+                            lastBackPressTime = currentTime;
+                            android.util.Log.d("MainActivity", "첫 번째 뒤로가기 - 토스트 표시");
+                            android.widget.Toast.makeText(MainActivity.this,
+                                    "뒤로가기 버튼을 한 번 더 누르면 종료됩니다.",
+                                    android.widget.Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        // 다른 화면에서는 네비게이션 백스택 처리
+                        android.util.Log.d("MainActivity", "다른 화면에서 뒤로가기 - 네비게이션 처리");
+                        if (navController.popBackStack()) {
+                            // 성공적으로 백스택 팝
+                        } else {
+                            // 더 이상 백스택이 없으면 앱 종료
+                            finish();
+                        }
+                    }
+                } else {
+                    // NavController가 없으면 앱 종료
+                    finish();
+                }
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

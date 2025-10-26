@@ -95,4 +95,10 @@
     <color name="md_theme_dark_onSurfaceVariant">#D1D5DB</color>
     <color name="md_theme_dark_background">#0F172A</color>
     <color name="md_theme_dark_onBackground">#F9FAFB</color>
+
+    <!-- ZXing Scanner Colors -->
+    <color name="zxing_viewfinder_mask">#60000000</color>         <!-- 스캔 영역 외부 마스크 -->
+    <color name="zxing_viewfinder_laser">#FFCC0000</color>        <!-- 스캔 레이저 라인 (빨강) -->
+    <color name="zxing_result_view">#B0000000</color>             <!-- 스캔 결과 오버레이 -->
+    <color name="zxing_possible_result_points">#C0FFFF00</color>  <!-- 인식 포인트 (노랑) -->
 </resources>

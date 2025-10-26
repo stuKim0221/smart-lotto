@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import app.grapekim.smartlotto.data.scheduler.QuickDataCheckReceiver;
+
 public class BootReceiver extends BroadcastReceiver {
 
     private static final String TAG = "BootReceiver";
@@ -26,23 +28,26 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         try {
-            // 알림이 활성화되어 있는지 확인
+            // 1. 알림이 활성화되어 있는지 확인
             if (!ReminderScheduler.isEnabled(context)) {
                 Log.d(TAG, "Reminder is disabled, skipping reschedule");
-                return;
-            }
-
-            // 알림 재스케줄링
-            boolean scheduled = ReminderScheduler.scheduleNext(context);
-
-            if (scheduled) {
-                Log.i(TAG, "Reminder successfully rescheduled after " + action);
             } else {
-                Log.w(TAG, "Failed to reschedule reminder after " + action);
+                // 알림 재스케줄링
+                boolean scheduled = ReminderScheduler.scheduleNext(context);
+
+                if (scheduled) {
+                    Log.i(TAG, "Reminder successfully rescheduled after " + action);
+                } else {
+                    Log.w(TAG, "Failed to reschedule reminder after " + action);
+                }
             }
+
+            // 2. 토요일 빠른 체크 재스케줄링 (부팅 후 알람이 사라지므로 재설정 필요)
+            QuickDataCheckReceiver.scheduleSaturdayQuickCheck(context);
+            Log.i(TAG, "QuickDataCheck rescheduled after " + action);
 
         } catch (Exception e) {
-            Log.e(TAG, "Error rescheduling reminder after " + action, e);
+            Log.e(TAG, "Error rescheduling tasks after " + action, e);
         }
     }
 

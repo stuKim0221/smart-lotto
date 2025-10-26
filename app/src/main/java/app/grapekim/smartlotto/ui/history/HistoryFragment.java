@@ -20,8 +20,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.OptIn;
-import androidx.camera.core.ExperimentalGetImage;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +33,7 @@ import app.grapekim.smartlotto.data.remote.NetworkProvider;
 import app.grapekim.smartlotto.data.remote.dto.LottoDrawDto;
 import app.grapekim.smartlotto.data.repository.LottoRepository;
 import app.grapekim.smartlotto.data.repository.LottoRepositoryImpl;
-import app.grapekim.smartlotto.ui.qr.QrScanActivity;
+import app.grapekim.smartlotto.ui.qr.ZxingScanActivity;
 import app.grapekim.smartlotto.ui.analysis.NumberAnalysisDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
@@ -69,7 +67,6 @@ import java.util.concurrent.Executors;
 
 import retrofit2.Response;
 
-@OptIn(markerClass = ExperimentalGetImage.class)
 public class HistoryFragment extends Fragment {
 
     private static final String TAG = "HistoryFragment";
@@ -98,6 +95,8 @@ public class HistoryFragment extends Fragment {
     // AdMob 전면광고
     private InterstitialAd mInterstitialAd;
     private GeneratedPickEntity pendingAnalysisRow; // 분석 대기 중인 데이터
+    private int adLoadRetryCount = 0;
+    private static final int MAX_AD_RETRY = 3;
 
     @Nullable
     @Override
@@ -168,6 +167,7 @@ public class HistoryFragment extends Fragment {
                         @Override
                         public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
                             mInterstitialAd = interstitialAd;
+                            adLoadRetryCount = 0; // 성공 시 카운터 리셋
                             Log.d(TAG, "전면광고 로드 성공");
                             setupAdCallbacks();
                         }
@@ -176,7 +176,20 @@ public class HistoryFragment extends Fragment {
                         public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                             Log.e(TAG, "전면광고 로드 실패: " + loadAdError.getMessage());
                             Log.e(TAG, "오류 코드: " + loadAdError.getCode());
+                            Log.e(TAG, "재시도 횟수: " + adLoadRetryCount + "/" + MAX_AD_RETRY);
                             mInterstitialAd = null;
+
+                            // 최대 재시도 횟수 이내라면 10초 후 재시도
+                            if (adLoadRetryCount < MAX_AD_RETRY && isAdded() && getView() != null) {
+                                adLoadRetryCount++;
+                                getView().postDelayed(() -> {
+                                    if (isAdded() && getContext() != null) {
+                                        loadInterstitialAd();
+                                    }
+                                }, 10000); // 10초 후 재시도
+                            } else {
+                                Log.w(TAG, "최대 재시도 횟수 도달 - 광고 없이 진행 가능");
+                            }
                         }
                     });
         } catch (Exception e) {
@@ -224,7 +237,7 @@ public class HistoryFragment extends Fragment {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        String qrText = result.getData().getStringExtra(QrScanActivity.EXTRA_QR_TEXT);
+                        String qrText = result.getData().getStringExtra(ZxingScanActivity.EXTRA_QR_TEXT);
                         handleQrScanResult(qrText);
                     }
                 }
@@ -422,12 +435,12 @@ public class HistoryFragment extends Fragment {
     /**
      * QR 스캔 시작 (기존 유지)
      */
-    @OptIn(markerClass = ExperimentalGetImage.class)
     private void startQrScan() {
         if (!isAdded() || getContext() == null) return;
 
         try {
-            Intent intent = new Intent(getContext(), QrScanActivity.class);
+            Intent intent = new Intent(getContext(), ZxingScanActivity.class);
+            intent.putExtra("SCAN_MODE", ZxingScanActivity.SCAN_MODE_ADD_NUMBERS);
             qrScanLauncher.launch(intent);
         } catch (Exception e) {
             Toast.makeText(getContext(),
@@ -658,7 +671,17 @@ public class HistoryFragment extends Fragment {
         // 분석할 데이터 저장
         pendingAnalysisRow = row;
 
-        // 광고가 로드되어 있으면 표시, 없으면 바로 분석 다이얼로그 표시
+        // 최대 재시도 횟수에 도달한 경우 광고 없이 진행
+        if (adLoadRetryCount >= MAX_AD_RETRY) {
+            Log.w(TAG, "최대 재시도 도달 - 광고 없이 번호 분석");
+            if (isAdded() && getContext() != null) {
+                Toast.makeText(getContext(), "광고 로드 실패로 광고 없이 진행합니다", Toast.LENGTH_SHORT).show();
+            }
+            showNumberAnalysisDialog();
+            return;
+        }
+
+        // 광고가 로드되어 있으면 바로 표시
         if (mInterstitialAd != null) {
             Log.d(TAG, "전면광고 표시 시작");
             try {
@@ -668,8 +691,29 @@ public class HistoryFragment extends Fragment {
                 showNumberAnalysisDialog();
             }
         } else {
-            Log.d(TAG, "광고 없음 - 바로 번호 분석 시작");
-            showNumberAnalysisDialog();
+            // 광고가 아직 로드되지 않았으면 대기 메시지 표시 후 잠시 대기
+            Log.d(TAG, "광고 로딩 대기 중...");
+            if (isAdded() && getContext() != null) {
+                Toast.makeText(getContext(), "광고 로딩 중... 잠시만 기다려주세요", Toast.LENGTH_SHORT).show();
+            }
+
+            // 3초 후 광고 재확인 (광고가 로드되었을 수도 있음)
+            if (getView() != null) {
+                getView().postDelayed(() -> {
+                    if (mInterstitialAd != null) {
+                        Log.d(TAG, "지연 후 전면광고 표시");
+                        try {
+                            mInterstitialAd.show(requireActivity());
+                        } catch (Exception e) {
+                            Log.e(TAG, "지연 후 광고 표시 실패", e);
+                            showNumberAnalysisDialog();
+                        }
+                    } else {
+                        Log.d(TAG, "광고 로드 실패 - 바로 번호 분석 시작");
+                        showNumberAnalysisDialog();
+                    }
+                }, 3000); // 3초 대기
+            }
         }
     }
 

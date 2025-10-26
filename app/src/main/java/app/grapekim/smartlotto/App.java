@@ -10,10 +10,18 @@ import android.util.Log;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+
+import java.util.concurrent.TimeUnit;
 
 import app.grapekim.smartlotto.data.work.DataInitWorker;
 import app.grapekim.smartlotto.data.CsvUpdateScheduler;
 import app.grapekim.smartlotto.data.scheduler.DrawResultScheduler;
+import app.grapekim.smartlotto.data.scheduler.AutoDataUpdateWorker;
+import app.grapekim.smartlotto.data.scheduler.QuickDataCheckReceiver;
 import app.grapekim.smartlotto.util.AdMobConfigValidator;
 
 /**
@@ -114,8 +122,51 @@ public class App extends Application {
             // 매주 토요일 10시 로또 데이터 업데이트 (배터리 최적화)
             scheduleSaturdayLottoUpdates();
 
+            // 매 시간마다 GitHub CSV 자동 체크 및 업데이트
+            scheduleAutoDataUpdate();
+
+            // 토요일 20:35~21:10 1분 간격 빠른 체크
+            QuickDataCheckReceiver.scheduleSaturdayQuickCheck(this);
+
         } catch (Exception e) {
             Log.e(TAG, "백그라운드 초기화 스케줄링 실패", e);
+        }
+    }
+
+    /**
+     * GitHub CSV 자동 체크 및 업데이트 스케줄링
+     *
+     * 전략:
+     * - 평일 정오(12시)에 체크 (WorkManager)
+     * - 토요일 20:35~21:10에 1분 간격 체크 (AlarmManager)
+     */
+    private void scheduleAutoDataUpdate() {
+        try {
+            // 네트워크 연결 시에만 실행되도록 제약 조건 설정
+            Constraints constraints = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+
+            // 15분마다 실행 (WorkManager 최소 간격)
+            PeriodicWorkRequest autoUpdateRequest = new PeriodicWorkRequest.Builder(
+                    AutoDataUpdateWorker.class,
+                    15, TimeUnit.MINUTES  // 15분 간격
+            )
+                    .setConstraints(constraints)
+                    .addTag("auto_data_update")
+                    .build();
+
+            WorkManager.getInstance(this)
+                    .enqueueUniquePeriodicWork(
+                            "auto_data_update_periodic",
+                            ExistingPeriodicWorkPolicy.KEEP,
+                            autoUpdateRequest
+                    );
+
+            Log.i(TAG, "⏰ 평일 정오 정기 체크 스케줄링 완료 (WorkManager)");
+
+        } catch (Exception e) {
+            Log.e(TAG, "자동 데이터 업데이트 스케줄링 실패", e);
         }
     }
 
