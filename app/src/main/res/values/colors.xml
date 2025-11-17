@@ -3,9 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- colors.xml에 추가할 기본 색상들 -->
-    <color name="win_color">#4CAF50</color>          <!-- 당첨 - 녹색 -->
-    <color name="no_win_color">#FF5722</color>       <!-- 낙첨 - 빨간색 -->
+    <!-- 기본 색상들 - 고대비 버전 -->
+    <color name="win_color">#2E7D32</color>          <!-- 당첨 - 진한 녹색 -->
+    <color name="no_win_color">#C62828</color>       <!-- 낙첨 - 진한 빨간색 -->
 
     <color name="gray_300">#D1D5DB</color>
     <color name="gray_400">#9CA3AF</color>
@@ -43,9 +43,9 @@
     <color name="gray_700">#374151</color>
     <color name="gray_800">#1F2937</color>
 
-    <!-- 버튼 경계선 색상 (라이트모드) -->
-    <color name="button_stroke_color">#E0E0E0</color>
-    <color name="button_stroke_focused">#DC2626</color>
+    <!-- 버튼 경계선 색상 (라이트모드) - 고대비 -->
+    <color name="button_stroke_color">#BDBDBD</color>
+    <color name="button_stroke_focused">#C62828</color>
 
     <!-- QR 게임 배경 관련 색상 (신규 추가) -->
     <color name="game_background_color">#F8FAFC</color>    <!-- 매우 밝은 회색 (슬레이트 50) -->
@@ -56,25 +56,27 @@
     <color name="colorOnSurfaceVariant">#6B7280</color>     <!-- 보조 텍스트용 -->
     <color name="colorSurfaceVariant">#F1F5F9</color>      <!-- 보조 배경용 -->
 
-    <!-- Material 3 Light Theme Colors -->
-    <color name="md_theme_light_primary">#DC2626</color>
+    <!-- Material 3 Light Theme Colors - High Contrast for 40+ Users -->
+    <color name="md_theme_light_primary">#C62828</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_primaryContainer">#FEE2E2</color>
-    <color name="md_theme_light_onPrimaryContainer">#7F1D1D</color>
-    <color name="md_theme_light_secondary">#DC2626</color>
+    <color name="md_theme_light_primaryContainer">#FFEBEE</color>
+    <color name="md_theme_light_onPrimaryContainer">#B71C1C</color>
+    <color name="md_theme_light_secondary">#1565C0</color>
     <color name="md_theme_light_onSecondary">#FFFFFF</color>
-    <color name="md_theme_light_secondaryContainer">#FEE2E2</color>
-    <color name="md_theme_light_onSecondaryContainer">#7F1D1D</color>
-    <color name="md_theme_light_tertiary">#9333EA</color>
+    <color name="md_theme_light_secondaryContainer">#E3F2FD</color>
+    <color name="md_theme_light_onSecondaryContainer">#0D47A1</color>
+    <color name="md_theme_light_tertiary">#6A1B9A</color>
     <color name="md_theme_light_onTertiary">#FFFFFF</color>
-    <color name="md_theme_light_tertiaryContainer">#F3E8FF</color>
-    <color name="md_theme_light_onTertiaryContainer">#581C87</color>
-    <color name="md_theme_light_surface">#FEFEFE</color>
-    <color name="md_theme_light_onSurface">#1F2937</color>
-    <color name="md_theme_light_surfaceVariant">#F1F5F9</color>
-    <color name="md_theme_light_onSurfaceVariant">#6B7280</color>
-    <color name="md_theme_light_background">#FEFEFE</color>
-    <color name="md_theme_light_onBackground">#1F2937</color>
+    <color name="md_theme_light_tertiaryContainer">#F3E5F5</color>
+    <color name="md_theme_light_onTertiaryContainer">#4A148C</color>
+    <color name="md_theme_light_surface">#FFFFFF</color>
+    <color name="md_theme_light_onSurface">#212121</color>
+    <color name="md_theme_light_surfaceVariant">#FAFAFA</color>
+    <color name="md_theme_light_onSurfaceVariant">#424242</color>
+    <color name="md_theme_light_background">#FFFFFF</color>
+    <color name="md_theme_light_onBackground">#212121</color>
+    <color name="md_theme_light_outline">#BDBDBD</color>
+    <color name="md_theme_light_outlineVariant">#E0E0E0</color>
 
     <!-- Material 3 Dark Theme Colors -->
     <color name="md_theme_dark_primary">#FCA5A5</color>

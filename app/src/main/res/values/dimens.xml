@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 로또 구슬 크기 (완벽한 원형을 위해 가로세로 동일) -->
-    <dimen name="lotto_ball_size">30dp</dimen>
+    <!-- 로또 구슬 크기 (가독성 향상을 위해 확대) -->
+    <dimen name="lotto_ball_size">40dp</dimen>
+    <dimen name="lotto_ball_text_size">18sp</dimen>
 
-    <!-- 기타 공통 크기들 -->
-    <dimen name="card_corner_radius">12dp</dimen>
-    <dimen name="card_elevation">4dp</dimen>
-    <dimen name="standard_padding">16dp</dimen>
-    <dimen name="small_padding">8dp</dimen>
-    <dimen name="large_padding">24dp</dimen>
+    <!-- 기타 공통 크기들 (간격 확대) -->
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_elevation_pressed">8dp</dimen>
+    <dimen name="standard_padding">20dp</dimen>
+    <dimen name="small_padding">12dp</dimen>
+    <dimen name="large_padding">32dp</dimen>
+    <dimen name="extra_large_padding">40dp</dimen>
 
-    <!-- 버튼 관련 크기 -->
+    <!-- 버튼 관련 크기 (터치 영역 확대) -->
     <dimen name="button_corner_radius">16dp</dimen>
-    <dimen name="button_stroke_width">3dp</dimen>
+    <dimen name="button_stroke_width">2dp</dimen>
+    <dimen name="button_min_height">60dp</dimen>
+    <dimen name="button_padding_vertical">16dp</dimen>
+    <dimen name="button_padding_horizontal">24dp</dimen>
 
     <!-- 홈 화면 버튼 이미지 크기 (기본 - 일반 스마트폰) -->
     <dimen name="home_button_image_size">140dp</dimen>
@@ -20,16 +26,24 @@
     <dimen name="home_ai_button_image_size">70dp</dimen>
     <dimen name="home_ai_button_padding">16dp</dimen>
 
-    <!-- 홈 화면 레이아웃 마진 -->
-    <dimen name="home_container_padding">20dp</dimen>
-    <dimen name="home_button_margin">8dp</dimen>
-    <dimen name="home_card_margin_bottom">16dp</dimen>
+    <!-- 홈 화면 레이아웃 마진 (간격 확대) -->
+    <dimen name="home_container_padding">24dp</dimen>
+    <dimen name="home_button_margin">12dp</dimen>
+    <dimen name="home_card_margin_bottom">24dp</dimen>
     <dimen name="home_ai_button_margin">32dp</dimen>
 
-    <!-- 텍스트 크기 (기본 - 중간 크기 스마트폰) -->
-    <dimen name="home_button_text_size">18sp</dimen>
-    <dimen name="home_ai_button_title_size">20sp</dimen>
-    <dimen name="home_ai_button_subtitle_size">18sp</dimen>
+    <!-- 텍스트 크기 (40대+ 사용자 최적화) -->
+    <dimen name="home_button_text_size">22sp</dimen>
+    <dimen name="home_ai_button_title_size">24sp</dimen>
+    <dimen name="home_ai_button_subtitle_size">16sp</dimen>
+
+    <!-- 추가 타이포그래피 시스템 -->
+    <dimen name="text_headline">24sp</dimen>
+    <dimen name="text_title">20sp</dimen>
+    <dimen name="text_body_large">18sp</dimen>
+    <dimen name="text_body">16sp</dimen>
+    <dimen name="text_label">14sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
 
     <!-- 반응형 레이아웃을 위한 최소/최대 크기 -->
     <dimen name="min_touch_target">48dp</dimen>

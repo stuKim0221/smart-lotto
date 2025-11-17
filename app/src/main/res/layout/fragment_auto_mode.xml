@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:text="자동 추천"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_headline"
+        android:textColor="@color/md_theme_light_onSurface"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -20,9 +21,10 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAutoGenerate"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_min_height"
         android:text="번호 자동 생성"
-        android:layout_marginTop="12dp"
+        android:textSize="@dimen/text_body_large"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/tvAutoTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -51,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:text="결과"
                 android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_title"
+                android:textColor="@color/md_theme_light_onSurface"/>
 
             <!-- 볼 UI: 화면이 좁으면 가로 스크롤 -->
             <HorizontalScrollView
@@ -76,9 +79,10 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAutoSave"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_min_height"
                 android:text="저장하기"
-                android:layout_marginTop="14dp"/>
+                android:textSize="@dimen/text_body_large"
+                android:layout_marginTop="16dp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -88,8 +92,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="* 완전히 무작위로 번호를 추천합니다."
-        android:textSize="12sp"
-        android:layout_marginTop="8dp"
+        android:textSize="@dimen/text_label"
+        android:textColor="@color/md_theme_light_onSurfaceVariant"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/cardAutoResult"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

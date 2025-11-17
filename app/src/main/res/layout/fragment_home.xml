@@ -40,7 +40,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="지난 회차"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/text_title"
+                    android:textColor="@color/md_theme_light_onSurface"
                     android:textStyle="bold" />
 
                 <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -128,7 +129,9 @@
                     android:layout_marginEnd="6dp"
                     android:gravity="center"
                     android:text="+"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_onSurface" />
 
                 <!-- 보너스 번호 -->
                 <TextView
@@ -172,9 +175,9 @@
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/home_button_margin"
                 app:cardCornerRadius="@dimen/button_corner_radius"
-                app:cardElevation="4dp"
-                app:strokeWidth="3dp"
-                app:strokeColor="@color/button_stroke_focused"
+                app:cardElevation="@dimen/card_elevation"
+                app:strokeWidth="@dimen/button_stroke_width"
+                app:strokeColor="@color/md_theme_light_outline"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -214,9 +217,9 @@
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/home_button_margin"
                 app:cardCornerRadius="@dimen/button_corner_radius"
-                app:cardElevation="4dp"
-                app:strokeWidth="3dp"
-                app:strokeColor="@color/button_stroke_focused"
+                app:cardElevation="@dimen/card_elevation"
+                app:strokeWidth="@dimen/button_stroke_width"
+                app:strokeColor="@color/md_theme_light_outline"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -266,8 +269,8 @@
                 android:layout_marginEnd="@dimen/home_ai_button_margin"
                 app:cardCornerRadius="@dimen/button_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
-                app:strokeWidth="3dp"
-                app:strokeColor="@color/button_stroke_focused"
+                app:strokeWidth="@dimen/button_stroke_width"
+                app:strokeColor="@color/md_theme_light_outline"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -366,7 +369,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="중요 안내사항"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/text_body"
                         android:textStyle="bold"
                         android:textColor="@android:color/holo_orange_dark"/>
                 </LinearLayout>
@@ -376,10 +379,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="• 본 앱은 번호 생성 도구로, 실제 로또 구매 서비스가 아닙니다\n• 해당앱의 이력만으로는 당첨금을 수령할 수 없습니다\n• 앱에서 생성된 번호는 참고용이며 당첨을 보장하지 않습니다"
-                    android:textSize="10sp"
-                    android:lineHeight="18sp"
-                    android:textColor="@android:color/black"
-                    android:alpha="0.8"/>
+                    android:textSize="@dimen/text_label"
+                    android:lineHeight="22sp"
+                    android:textColor="@color/md_theme_light_onSurface"
+                    android:alpha="0.87"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
