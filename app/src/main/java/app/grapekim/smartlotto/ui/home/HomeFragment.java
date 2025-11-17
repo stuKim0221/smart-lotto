@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.viewpager2.widget.ViewPager2;
 
 import app.grapekim.smartlotto.R;
 import app.grapekim.smartlotto.data.remote.dto.LottoDrawDto;
@@ -32,8 +34,10 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
     private View progressLast;
     private TextView lastNum1, lastNum2, lastNum3, lastNum4, lastNum5, lastNum6, lastBonus;
 
-    // 카드들
-    private MaterialCardView cardQrCheck, cardManual, cardAi;
+    // ViewPager2와 인디케이터
+    private ViewPager2 viewPagerButtons;
+    private LinearLayout dotsIndicator;
+    private ImageView[] dots;
 
     // 고정 크기 상수들
     private static final int BALL_SIZE_DP = 32;
@@ -72,10 +76,12 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
         lastNum6 = view.findViewById(R.id.lastNum6);
         lastBonus = view.findViewById(R.id.lastBonusNum);
 
-        // 카드들 초기화
-        cardQrCheck = view.findViewById(R.id.cardQrCheck);
-        cardManual = view.findViewById(R.id.cardManual);
-        cardAi = view.findViewById(R.id.cardAi);
+        // ViewPager2와 인디케이터 초기화
+        viewPagerButtons = view.findViewById(R.id.viewPagerButtons);
+        dotsIndicator = view.findViewById(R.id.dotsIndicator);
+
+        // ViewPager2 설정
+        setupViewPager();
 
         // 구슬들에 고정 크기 적용
         applyFixedSizesToBalls();
@@ -83,49 +89,84 @@ public class HomeFragment extends BaseFragment<HomeViewModel> {
 
     @Override
     protected void setupClickListeners() {
-        // QR 당첨 확인: ZXing 스캐너로 즉시 당첨 결과 확인
-        View.OnClickListener qrCheckAction = v -> SafeUtils.safeRun(() -> {
-            try {
-                android.util.Log.d("HomeFragment", "QR 버튼 클릭됨");
-                Intent intent = new Intent(requireContext(), ZxingScanActivity.class);
-                intent.putExtra("SCAN_MODE", ZxingScanActivity.SCAN_MODE_WINNING_CHECK);
-                android.util.Log.d("HomeFragment", "Intent 생성 완료, Activity 시작");
-                startActivity(intent);
-                android.util.Log.d("HomeFragment", "startActivity 호출 완료");
-            } catch (Exception e) {
-                android.util.Log.e("HomeFragment", "QR 스캔 시작 실패", e);
-                showToast("QR 스캔 화면을 열 수 없습니다: " + e.getMessage());
-            }
+        // ViewPager의 어댑터에서 클릭 이벤트를 처리합니다
+    }
+
+    /**
+     * ViewPager2 설정
+     */
+    private void setupViewPager() {
+        MainButtonsAdapter adapter = new MainButtonsAdapter(position -> {
+            SafeUtils.safeRun(() -> {
+                try {
+                    Intent intent;
+                    switch (position) {
+                        case 0: // QR 당첨 확인
+                            intent = new Intent(requireContext(), ZxingScanActivity.class);
+                            intent.putExtra("SCAN_MODE", ZxingScanActivity.SCAN_MODE_WINNING_CHECK);
+                            startActivity(intent);
+                            break;
+                        case 1: // 수동 선택
+                            intent = new Intent(requireContext(), ManualInputActivity.class);
+                            startActivity(intent);
+                            break;
+                        case 2: // AI 기반 번호 생성
+                            intent = new Intent(requireContext(), AiNumberGenerationActivity.class);
+                            startActivity(intent);
+                            break;
+                    }
+                } catch (Exception e) {
+                    showToast("화면을 열 수 없습니다.");
+                }
+            });
         });
 
-        // QR 당첨 확인 카드에 클릭 리스너 설정
-        if (cardQrCheck != null) cardQrCheck.setOnClickListener(qrCheckAction);
+        viewPagerButtons.setAdapter(adapter);
 
-        // 수동: ManualInputActivity로 이동
-        View.OnClickListener manualAction = v -> SafeUtils.safeRun(() -> {
-            try {
-                Intent intent = new Intent(requireContext(), ManualInputActivity.class);
-                startActivity(intent);
-            } catch (Exception e) {
-                showToast("수동 입력 화면을 열 수 없습니다.");
+        // 페이지 인디케이터 설정
+        setupIndicator(3);
+        setCurrentIndicator(0);
+
+        // 페이지 변경 리스너
+        viewPagerButtons.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setCurrentIndicator(position);
             }
         });
+    }
 
-        // 수동 카드에만 클릭 리스너 설정
-        if (cardManual != null) cardManual.setOnClickListener(manualAction);
+    /**
+     * 페이지 인디케이터 dots 설정
+     */
+    private void setupIndicator(int count) {
+        dots = new ImageView[count];
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(8, 0, 8, 0);
 
-        // AI: AiNumberGenerationActivity로 이동
-        View.OnClickListener aiAction = v -> SafeUtils.safeRun(() -> {
-            try {
-                Intent intent = new Intent(requireContext(), AiNumberGenerationActivity.class);
-                startActivity(intent);
-            } catch (Exception e) {
-                showToast("AI 번호 생성 화면을 열 수 없습니다.");
-            }
-        });
+        for (int i = 0; i < count; i++) {
+            dots[i] = new ImageView(requireContext());
+            dots[i].setImageResource(R.drawable.dot_indicator_inactive);
+            dots[i].setLayoutParams(params);
+            dotsIndicator.addView(dots[i]);
+        }
+    }
 
-        // AI 카드에만 클릭 리스너 설정
-        if (cardAi != null) cardAi.setOnClickListener(aiAction);
+    /**
+     * 현재 페이지 인디케이터 업데이트
+     */
+    private void setCurrentIndicator(int position) {
+        if (dots == null) return;
+        for (int i = 0; i < dots.length; i++) {
+            int drawableId = (i == position) ?
+                    R.drawable.dot_indicator_active :
+                    R.drawable.dot_indicator_inactive;
+            dots[i].setImageResource(drawableId);
+        }
     }
 
     @Override

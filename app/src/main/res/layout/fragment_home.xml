@@ -145,190 +145,36 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- 자동/수동/AI 큰 버튼 카드들 (토끼귀 배치) -->
+    <!-- 캐러셀 버튼 컨테이너 -->
     <LinearLayout
-        android:id="@+id/buttonContainer"
+        android:id="@+id/carouselContainer"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintTop_toBottomOf="@id/cardLastDraw"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- 첫 번째 행: 자동 + 수동 -->
-        <LinearLayout
+        <!-- ViewPager2 캐러셀 -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerButtons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="@dimen/home_card_margin_bottom">
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <!-- QR 당첨 확인 버튼 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardQrCheck"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="@dimen/home_button_margin"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="@dimen/card_elevation"
-                app:strokeWidth="@dimen/button_stroke_width"
-                app:strokeColor="?attr/colorOutline"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="@dimen/home_button_padding">
-
-                    <!-- 아이콘 영역 -->
-                    <ImageView
-                        android:layout_width="@dimen/home_button_image_size"
-                        android:layout_height="@dimen/home_button_image_size"
-                        android:src="@drawable/ic_qrscan"
-                        android:padding="20dp"
-                        android:scaleType="centerInside"
-                        android:contentDescription="QR 당첨 확인"/>
-
-                    <!-- 라벨 -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="QR 당첨확인"
-                        android:textSize="@dimen/home_button_text_size"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 수동 버튼 -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardManual"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/home_button_margin"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="@dimen/card_elevation"
-                app:strokeWidth="@dimen/button_stroke_width"
-                app:strokeColor="?attr/colorOutline"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="@dimen/home_button_padding">
-
-                    <!-- 아이콘 영역 (이미지 크기 확대) -->
-                    <ImageView
-                        android:layout_width="@dimen/home_button_image_size"
-                        android:layout_height="@dimen/home_button_image_size"
-                        android:src="@drawable/ic_manual_touch"
-                        android:padding="20dp"
-                        android:scaleType="centerInside"
-                        android:contentDescription="수동 선택"/>
-
-                    <!-- 라벨 (기존 스타일 유지) -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="수동"
-                        android:textSize="@dimen/home_button_text_size"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-
-        <!-- 두 번째 행: AI 기반 번호 생성 (가로로 넓게) -->
+        <!-- 페이지 인디케이터 -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/dotsIndicator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="@dimen/home_card_margin_bottom">
-
-            <!-- AI 기반 번호 생성 버튼 (가로로 넓게) -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/home_ai_button_margin"
-                android:layout_marginEnd="@dimen/home_ai_button_margin"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="@dimen/card_elevation"
-                app:strokeWidth="@dimen/button_stroke_width"
-                app:strokeColor="?attr/colorOutline"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/home_ai_button_padding">
-
-                    <!-- 아이콘 영역 (이미지 크기 확대) -->
-                    <ImageView
-                        android:layout_width="@dimen/home_ai_button_image_size"
-                        android:layout_height="@dimen/home_ai_button_image_size"
-                        android:src="@drawable/ic_ai_brain"
-                        android:padding="1dp"
-                        android:scaleType="centerInside"
-                        android:contentDescription="AI 아이콘"
-                        android:layout_marginEnd="16dp"/>
-
-                    <!-- 텍스트 영역 -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="start">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🤖 AI 기반 번호 생성"
-                            android:textSize="@dimen/home_ai_button_title_size"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorPrimary"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="과거 당첨 데이터를 분석해서 추천"
-                            android:textSize="@dimen/home_ai_button_subtitle_size"
-                            android:textColor="?android:attr/textColorSecondary"/>
-                    </LinearLayout>
-
-                    <!-- 화살표 아이콘 -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="›"
-                        android:textSize="32sp"
-                        android:textColor="?attr/colorPrimary"
-                        android:layout_marginStart="8dp"/>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
+            android:gravity="center" />
 
         <!-- 중요 안내사항 카드 -->
         <com.google.android.material.card.MaterialCardView

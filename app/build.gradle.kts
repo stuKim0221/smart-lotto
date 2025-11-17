@@ -104,6 +104,9 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.cardview)
 
+    // ===== ViewPager2 for Carousel =====
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
     // ===== Room 데이터베이스 =====
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
