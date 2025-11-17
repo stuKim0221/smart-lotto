@@ -13,7 +13,12 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:strokeWidth="@dimen/button_stroke_width"
+            app:strokeColor="?attr/colorOutline"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,16 +34,18 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_database"/>
+                        android:layout_width="@dimen/icon_size_medium"
+                        android:layout_height="@dimen/icon_size_medium"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_database"
+                        app:tint="?attr/colorPrimary"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="데이터 업데이트"
-                        android:textSize="16sp"
+                        android:text="📊 데이터 업데이트"
+                        android:textSize="@dimen/text_body_large"
+                        android:textColor="?attr/colorOnSurface"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -47,20 +54,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:text="📅 자동 업데이트: 매주 토요일 오후 10시\n⏰ 로또 추첨 후 최신 당첨번호를 자동으로 받아옵니다"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/text_label"
                     android:textColor="?attr/colorOnSurfaceVariant"
-                    android:lineSpacingExtra="2dp" />
+                    android:lineSpacingExtra="4dp" />
 
                 <!-- 수동 업데이트 버튼 -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnManualUpdate"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_height="@dimen/button_min_height"
+                    android:layout_marginTop="16dp"
                     android:text="수동 업데이트"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/text_body"
+                    app:cornerRadius="@dimen/button_corner_radius" />
 
             </LinearLayout>
 
@@ -70,7 +78,11 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:strokeWidth="@dimen/button_stroke_width"
+            app:strokeColor="?attr/colorOutline">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,9 +101,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/settings_draw_reminder"
+                        android:text="🔔 추첨 알림"
                         android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/text_body_large"
+                        android:textColor="?attr/colorOnSurface" />
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/swReminder"
@@ -143,7 +156,11 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:strokeWidth="@dimen/button_stroke_width"
+            app:strokeColor="?attr/colorOutline">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,7 +170,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/settings_version"
+                    android:text="ℹ️ 버전 정보"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="?attr/colorOnSurface"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvVersion"
@@ -166,7 +185,11 @@
         <!-- 개인정보 처리방침 -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:strokeWidth="@dimen/button_stroke_width"
+            app:strokeColor="?attr/colorOutline">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -176,16 +199,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/privacy_policy_title"
+                    android:text="🔒 개인정보 처리방침"
                     android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textSize="@dimen/text_body_large"
+                    android:textColor="?attr/colorOnSurface"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnOpenPrivacy"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/button_min_height"
                     android:text="@string/open_privacy_screen"
-                    android:layout_marginTop="8dp"/>
+                    android:textSize="@dimen/text_body"
+                    android:layout_marginTop="12dp"
+                    app:cornerRadius="@dimen/button_corner_radius"
+                    style="@style/Widget.Material3.Button.OutlinedButton"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

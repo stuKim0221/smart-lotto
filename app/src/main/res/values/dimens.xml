@@ -4,19 +4,22 @@
     <dimen name="lotto_ball_size">40dp</dimen>
     <dimen name="lotto_ball_text_size">18sp</dimen>
 
-    <!-- 기타 공통 크기들 (간격 확대) -->
-    <dimen name="card_corner_radius">16dp</dimen>
+    <!-- 기타 공통 크기들 (SakMvp1 디자인 철학 적용) -->
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="card_corner_radius_large">20dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_elevation_medium">4dp</dimen>
     <dimen name="card_elevation_pressed">8dp</dimen>
     <dimen name="standard_padding">20dp</dimen>
     <dimen name="small_padding">12dp</dimen>
-    <dimen name="large_padding">32dp</dimen>
-    <dimen name="extra_large_padding">40dp</dimen>
+    <dimen name="large_padding">28dp</dimen>
+    <dimen name="extra_large_padding">32dp</dimen>
 
-    <!-- 버튼 관련 크기 (터치 영역 확대) -->
-    <dimen name="button_corner_radius">16dp</dimen>
-    <dimen name="button_stroke_width">2dp</dimen>
-    <dimen name="button_min_height">60dp</dimen>
+    <!-- 버튼 관련 크기 (SakMvp1 스타일 + 40대+ 최적화) -->
+    <dimen name="button_corner_radius">12dp</dimen>
+    <dimen name="button_stroke_width">1dp</dimen>
+    <dimen name="button_min_height">56dp</dimen>
+    <dimen name="button_min_height_large">60dp</dimen>
     <dimen name="button_padding_vertical">16dp</dimen>
     <dimen name="button_padding_horizontal">24dp</dimen>
 
@@ -47,5 +50,16 @@
 
     <!-- 반응형 레이아웃을 위한 최소/최대 크기 -->
     <dimen name="min_touch_target">48dp</dimen>
+    <dimen name="list_item_height">56dp</dimen>
     <dimen name="max_content_width">720dp</dimen>
+
+    <!-- 아이콘 크기 (일관성) -->
+    <dimen name="icon_size_small">20dp</dimen>
+    <dimen name="icon_size_medium">24dp</dimen>
+    <dimen name="icon_size_large">32dp</dimen>
+    <dimen name="icon_size_xlarge">48dp</dimen>
+
+    <!-- 구분선 들여쓰기 (SakMvp1 스타일) -->
+    <dimen name="divider_inset">60dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
 </resources>

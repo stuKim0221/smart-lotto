@@ -39,7 +39,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="지난 회차"
+                    android:text="🎱 지난 회차"
                     android:textSize="@dimen/text_title"
                     android:textColor="@color/md_theme_light_onSurface"
                     android:textStyle="bold" />
@@ -174,10 +174,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/home_button_margin"
-                app:cardCornerRadius="@dimen/button_corner_radius"
+                app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
                 app:strokeWidth="@dimen/button_stroke_width"
-                app:strokeColor="@color/md_theme_light_outline"
+                app:strokeColor="?attr/colorOutline"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -216,10 +216,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/home_button_margin"
-                app:cardCornerRadius="@dimen/button_corner_radius"
+                app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
                 app:strokeWidth="@dimen/button_stroke_width"
-                app:strokeColor="@color/md_theme_light_outline"
+                app:strokeColor="?attr/colorOutline"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -267,10 +267,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/home_ai_button_margin"
                 android:layout_marginEnd="@dimen/home_ai_button_margin"
-                app:cardCornerRadius="@dimen/button_corner_radius"
+                app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"
                 app:strokeWidth="@dimen/button_stroke_width"
-                app:strokeColor="@color/md_theme_light_outline"
+                app:strokeColor="?attr/colorOutline"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground">
@@ -303,7 +303,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="AI 기반 번호 생성"
+                            android:text="🤖 AI 기반 번호 생성"
                             android:textSize="@dimen/home_ai_button_title_size"
                             android:textStyle="bold"
                             android:textColor="?attr/colorPrimary"/>
@@ -337,18 +337,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="@android:color/holo_orange_light"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:strokeWidth="@dimen/button_stroke_width"
+            app:strokeColor="#FFA726"
             android:background="@android:color/transparent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
-                android:background="#FFF8E1">
+                android:padding="@dimen/standard_padding"
+                android:background="#FFF3E0">
 
                 <!-- 제목 행 -->
                 <LinearLayout
